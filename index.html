@@ -759,10 +759,10 @@ body.modo-luz .sonido{ background:rgba(255,255,255,.6) }
     <div class="dentro">
       <div class="sube etiqueta">Cerradura 04/07 <span class="nivel" data-nivel="4"></span></div>
       <h2 class="sube titulo">Sellos<br>del pasaporte</h2>
-      <p class="sube linea tenue">Marquen los <b>cinco países</b> que están en el expediente. Uno de más y no abre.</p>
+      <p class="sube linea tenue">Marquen los <b>cinco países que han recorrido juntos</b>. Uno de más y no abre.</p>
       <div class="sube chips" id="chips"></div>
       <button class="sube btn" id="btn-paises" type="button">Confirmar</button>
-      <div class="sube consola" id="consola4">Cinco sellos. Ni cuatro ni seis.</div>
+      <div class="sube consola" id="consola4">Cinco países, los que pisaron los dos. Ni cuatro ni seis.</div>
       <button class="sube pista-btn" data-pistas="4">Pista · 3</button>
     </div>
   </section>
@@ -979,7 +979,7 @@ const PISTAS = {
   3: ['No volteen a lo loco: memoricen dónde quedó cada cosa.',
       'Sólo necesitan tres parejas, no las seis.',
       'Si las dos son iguales se quedan destapadas. Si no, se tapan otra vez.'],
-  4: ['Son cinco exactos. Ni cuatro ni seis.',
+  4: ['Son cinco exactos: sólo cuentan los que viajaron los dos juntos.',
       'Cuatro quedan en Europa. El quinto, bien al sur del continente americano.',
       'Portugal, Suiza, Italia, España (ahí está el Bernabéu)... y Chile.'],
   5: ['No fue en la camioneta que están estrenando ahora.',
@@ -1475,7 +1475,7 @@ const PISTAS = {
                elegidos.every(function (p) { return CLAVES.sellos.indexOf(p) !== -1; });
       if (ok) {
         listo = true;
-        resolver('#consola4', '<b>Cinco sellos.</b> Y en uno de ellos hay un estadio con nombre propio.', E.c5);
+        resolver('#consola4', '<b>Cinco países juntos.</b> Y en uno de ellos hay un estadio con nombre propio.', E.c5);
       } else {
         caja.classList.add('error');
         setTimeout(function () { caja.classList.remove('error'); }, 420);
