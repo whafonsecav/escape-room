@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="UTF-8">
+<!-- viewport-fit=cover + user-scalable=no -> indispensable para la regla de CERO SCROLL -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#08090b">
+<title>SALA 01</title>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Andrés y Cristina: están encerrados.">
+<meta property="og:description" content="Siete cerraduras. Siete letras. Una sola salida. Alguien los encerró aquí a propósito.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,700;1,9..144,900&display=swap" rel="stylesheet">
+
+<style>
+/* ==================================================================
+   0. PALETA — la sala se calienta con cada letra; al escapar,
+      el mundo entero pasa a colores de celebración.
+   ================================================================== */
+:root{
+  --mono:'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --serif:'Fraunces', Georgia, 'Times New Roman', serif;
+
+  --bg:#0a0b0e; --panel:#12151a; --ink:#e9f1ec; --dim:#7d8a84;
+  --neon:#7dffcf; --alarma:#ff6b6b;
+  --borde:rgba(125,255,207,.26); --sombra:rgba(125,255,207,.18);
+
+  --fs-nano:  clamp(8px,  min(2.4vw, 1.25vh), 11px);
+  --fs-micro: clamp(9.5px,min(2.9vw, 1.5vh),  13px);
+  --fs-small: clamp(11px, min(3.3vw, 1.75vh), 14px);
+  --fs-body:  clamp(12.5px,min(3.8vw,2vh),    17px);
+  --fs-big:   clamp(20px, min(7vw,   3.9vh),  34px);
+  --fs-huge:  clamp(38px, min(15vw,  8.6vh),  80px);
+
+  --gap: clamp(6px, 1.5vh, 15px);
+  --pad-top: calc(env(safe-area-inset-top, 0px) + clamp(66px, 11vh, 92px));
+  /* deja aire abajo para el botón fijo "Siguiente" */
+  --pad-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(56px, 9vh, 78px));
+}
+
+/* Con el botón "Siguiente" en pantalla, la escena cede espacio abajo */
+body.con-siguiente{
+  --pad-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(76px, 12.5vh, 102px));
+}
+
+/* Fuera de la sala: crema, terracota y rosa de celebración */
+body.modo-luz{
+  --bg:#fff6ec; --panel:rgba(255,255,255,.72); --ink:#33231a; --dim:#94775f;
+  --neon:#c05c1e; --alarma:#c05c1e;
+  --borde:rgba(192,92,30,.22); --sombra:rgba(192,92,30,.14);
+  --pad-top: calc(env(safe-area-inset-top, 0px) + clamp(26px, 4.5vh, 44px));
+}
+
+/* ==================================================================
+   1. REGLA DE ORO: CERO SCROLL
+   ================================================================== */
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0 }
+
+html, body{
+  height:100%; width:100%;
+  overflow:hidden; overscroll-behavior:none;
+  position:fixed; inset:0; touch-action:none;
+  -webkit-text-size-adjust:100%; -webkit-tap-highlight-color:transparent;
+  -webkit-font-smoothing:antialiased;
+}
+body{
+  font-family:var(--mono); color:var(--ink); background:var(--bg);
+  user-select:none; -webkit-user-select:none;
+  transition:background-color 1.8s ease, color 1.8s ease;
+}
+
+.fondo{
+  position:fixed; inset:0; z-index:0;
+  background:
+    radial-gradient(70% 42% at 50% -6%, rgba(125,255,207,.14) 0%, rgba(125,255,207,0) 60%),
+    radial-gradient(90% 60% at 50% 108%, rgba(255,107,107,.07) 0%, rgba(255,107,107,0) 62%);
+  transition:opacity 1.8s ease;
+}
+body.modo-luz .fondo{ opacity:0 }
+
+/* Capa cálida: sube un poco con CADA letra ganada */
+.calidez{
+  position:fixed; inset:0; z-index:0; opacity:0; pointer-events:none;
+  background:
+    radial-gradient(85% 58% at 50% 110%, rgba(255,172,96,.5) 0%, rgba(255,172,96,0) 68%),
+    radial-gradient(60% 40% at 50% -8%, rgba(255,206,150,.32) 0%, rgba(255,206,150,0) 70%);
+  transition:opacity 1.6s ease;
+}
+body.modo-luz .calidez{
+  opacity:1;
+  background:
+    radial-gradient(75% 50% at 50% 112%, rgba(255,197,138,.55) 0%, rgba(255,246,236,0) 70%),
+    radial-gradient(65% 45% at 50% -10%, rgba(255,214,224,.55) 0%, rgba(255,246,236,0) 72%);
+}
+
+.rejilla{
+  position:fixed; inset:0; z-index:0; opacity:.45;
+  background-image:
+    linear-gradient(rgba(125,255,207,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125,255,207,.045) 1px, transparent 1px);
+  background-size:38px 38px;
+  mask-image:radial-gradient(75% 60% at 50% 45%, #000 20%, transparent 100%);
+  -webkit-mask-image:radial-gradient(75% 60% at 50% 45%, #000 20%, transparent 100%);
+  transition:opacity 1.4s ease;
+}
+body.modo-luz .rejilla{ opacity:0 }
+
+/* ==================================================================
+   2. CELEBRACIÓN: confeti, globos y cosas de bebé
+   ================================================================== */
+.confeti, .globos{ position:fixed; inset:0; pointer-events:none; overflow:hidden }
+.confeti{ z-index:45 }
+.globos{ z-index:1 }
+
+.confeti i{
+  position:absolute; top:-14vh; display:block;
+  width:8px; height:13px; border-radius:1px; opacity:0;
+  animation:caer linear forwards;
+}
+@keyframes caer{
+  0%   { transform:translate3d(0,0,0) rotate(0deg); opacity:1 }
+  100% { transform:translate3d(var(--desvio,20px),118vh,0) rotate(var(--giro,720deg)); opacity:.85 }
+}
+
+.globo{
+  position:absolute; bottom:-26vh;
+  width:clamp(26px,8vw,44px); aspect-ratio:.82;
+  border-radius:50% 50% 46% 46%;
+  animation:subir linear infinite;
+  opacity:.85;
+}
+.globo::before{  /* brillo */
+  content:''; position:absolute; top:16%; left:22%;
+  width:24%; height:18%; border-radius:50%;
+  background:rgba(255,255,255,.55);
+}
+.globo::after{   /* cuerda */
+  content:''; position:absolute; top:100%; left:50%;
+  width:1px; height:clamp(18px,5vh,34px);
+  background:linear-gradient(rgba(0,0,0,.22), transparent);
+}
+@keyframes subir{
+  0%   { transform:translate3d(0,0,0) }
+  100% { transform:translate3d(var(--vaiven,18px),-135vh,0) }
+}
+
+.bebe{
+  position:absolute; bottom:-18vh;
+  font-size:clamp(17px,5.4vw,28px);
+  animation:subir linear infinite; opacity:.9;
+}
+
+/* ==================================================================
+   3. HUD + LETRAS GANADAS
+   ================================================================== */
+.hud{
+  position:fixed; z-index:20; left:0; right:0;
+  top:calc(env(safe-area-inset-top,0px) + clamp(10px,2vh,16px));
+  display:flex; flex-direction:column; align-items:center; gap:clamp(5px,1vh,9px);
+  padding:0 clamp(12px,4vw,22px); pointer-events:none;
+  transition:opacity 1s ease;
+}
+body.modo-luz .hud{ opacity:0 }
+.hud-linea{
+  width:100%; display:flex; align-items:center; justify-content:space-between; gap:8px;
+  font-size:var(--fs-nano); letter-spacing:.18em; text-transform:uppercase; color:var(--dim);
+}
+.hud .sala{ color:var(--neon) }
+.hud .temp{ color:#8fd8ff }
+.hud .reloj{ font-weight:700; color:var(--ink); letter-spacing:.08em }
+
+.palabra{ display:flex; gap:clamp(3px,1.2vw,6px) }
+.palabra i{
+  width:clamp(20px,6.4vw,28px); height:clamp(24px,7.6vw,34px);
+  display:grid; place-items:center; border-radius:2px;
+  background:rgba(255,255,255,.03); box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);
+  font-style:normal; font-weight:700; font-size:clamp(11px,3.6vw,16px); color:var(--neon);
+}
+.palabra i.llena{ box-shadow:inset 0 0 0 1px var(--neon), 0 0 14px var(--sombra); animation:cae .5s cubic-bezier(.2,1.5,.4,1) }
+@keyframes cae{ 0%{transform:translateY(-14px) scale(1.4); opacity:0} 100%{transform:none; opacity:1} }
+
+/* ==================================================================
+   4. ESCENAS
+   ================================================================== */
+.escenario{ position:fixed; inset:0; z-index:10; height:100vh; height:100dvh; overflow:hidden }
+.escena{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:var(--pad-top) clamp(14px,4.5vw,28px) var(--pad-bottom);
+  text-align:center; overflow:hidden;
+  opacity:0; visibility:hidden; pointer-events:none;
+  /* OJO: visibility NO va en la transición. Si va, la escena tarda ~.45s en
+     volverse "tocable" y los arrastres de las letras no agarran al entrar. */
+  transition:opacity .45s ease;
+}
+.escena.activa{ opacity:1; visibility:visible; pointer-events:auto }
+.escena.saliendo{ opacity:0; visibility:visible; pointer-events:none }
+.dentro{
+  display:flex; flex-direction:column; align-items:center;
+  gap:var(--gap); width:100%; max-width:min(500px,95vw); max-height:100%;
+}
+.sube{ opacity:0 }
+.escena.activa .sube{ animation:sube .5s cubic-bezier(.2,.75,.3,1) both }
+.escena.activa .sube:nth-child(1){ animation-delay:.03s }
+.escena.activa .sube:nth-child(2){ animation-delay:.11s }
+.escena.activa .sube:nth-child(3){ animation-delay:.19s }
+.escena.activa .sube:nth-child(4){ animation-delay:.27s }
+.escena.activa .sube:nth-child(5){ animation-delay:.35s }
+.escena.activa .sube:nth-child(6){ animation-delay:.43s }
+.escena.activa .sube:nth-child(7){ animation-delay:.51s }
+.escena.activa .sube:nth-child(8){ animation-delay:.59s }
+@keyframes sube{ from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:none} }
+
+/* ==================================================================
+   5. TIPOGRAFÍA
+   ================================================================== */
+.etiqueta{
+  font-size:var(--fs-nano); letter-spacing:.3em; text-transform:uppercase;
+  color:var(--neon); display:flex; align-items:center; gap:9px; justify-content:center; flex-wrap:wrap;
+}
+.etiqueta.rojo{ color:var(--alarma) }
+.nivel{ display:inline-flex; gap:3px }
+.nivel b{ width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,.18) }
+.nivel b.on{ background:var(--alarma) }
+
+.titulo{ font-weight:700; font-size:var(--fs-big); line-height:1.06; letter-spacing:-.02em; text-transform:uppercase; text-wrap:balance }
+p.linea{ font-size:var(--fs-body); line-height:1.45; max-width:33ch; margin:0 auto; text-wrap:pretty }
+p.linea.tenue{ color:var(--dim) }
+p.linea b{ color:var(--neon); font-weight:700 }
+
+.consola{
+  font-size:var(--fs-micro); line-height:1.35; color:var(--dim);
+  min-height:3.1em; display:flex; align-items:center; justify-content:center;
+  max-width:32ch; padding:0 4px;
+}
+.consola b{ color:var(--neon) }
+.consola.mal b{ color:var(--alarma) }
+.consola.parpadeo{ animation:parpadeo .34s steps(2) 2 }
+@keyframes parpadeo{ 50%{opacity:.25} }
+
+.pista-btn{
+  background:none; border:0; cursor:pointer; font-family:var(--mono);
+  font-size:var(--fs-nano); letter-spacing:.18em; text-transform:uppercase;
+  color:var(--dim); padding:7px 13px; border-radius:999px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);
+  transition:color .2s ease, box-shadow .2s ease, opacity .3s ease;
+}
+.pista-btn:active{ color:var(--neon); box-shadow:inset 0 0 0 1px var(--borde) }
+.pista-btn:disabled{ opacity:.3; cursor:default }
+
+/* ==================================================================
+   6. BOTONES
+   ================================================================== */
+.btn{
+  font-family:var(--mono); font-size:var(--fs-small); font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:#07100c; background:var(--neon); border:0; border-radius:2px;
+  padding:clamp(10px,1.7vh,15px) clamp(17px,5.2vw,28px);
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  box-shadow:0 0 0 1px var(--neon), 0 10px 30px var(--sombra);
+  cursor:pointer; touch-action:manipulation; text-decoration:none;
+  transition:transform .15s ease;
+}
+body.modo-luz .btn{ color:#fff8f0; border-radius:999px; box-shadow:0 8px 22px rgba(192,92,30,.28) }
+.btn:active{ transform:translateY(2px) scale(.98) }
+.btn.hueco-btn{ background:transparent; color:var(--neon); box-shadow:inset 0 0 0 1px var(--borde) }
+/* el botón secundario no tiene fondo: su texto NUNCA puede ser claro */
+body.modo-luz .btn.hueco-btn{ color:var(--neon); background:rgba(255,255,255,.6); box-shadow:inset 0 0 0 1.5px rgba(192,92,30,.4) }
+.btn svg{ width:15px; height:15px; flex:0 0 auto }
+
+/* Botón de sonido: el audio arranca solo, pero siempre se puede callar */
+.sonido{
+  position:fixed; z-index:23;
+  left:calc(env(safe-area-inset-left,0px) + clamp(10px,3vw,16px));
+  bottom:calc(env(safe-area-inset-bottom,0px) + clamp(10px,1.8vh,16px));
+  width:clamp(30px,8.5vw,36px); height:clamp(30px,8.5vw,36px);
+  border:0; border-radius:50%; padding:0; cursor:pointer;
+  background:rgba(255,255,255,.05); box-shadow:inset 0 0 0 1px var(--borde);
+  color:var(--neon); display:grid; place-items:center;
+  opacity:.55; transition:opacity .25s ease, color .8s ease, box-shadow .8s ease;
+}
+.sonido:active{ opacity:1; transform:scale(.92) }
+.sonido svg{ width:52%; height:52% }
+.sonido .mudo{ display:none }
+.sonido.callado .suena{ display:none }
+.sonido.callado .mudo{ display:block }
+body.modo-luz .sonido{ background:rgba(255,255,255,.6) }
+
+/* Botón fijo para avanzar: nada pasa solo, ellos deciden cuándo seguir */
+.siguiente{
+  position:fixed; z-index:22; left:50%; margin-left:0;
+  bottom:calc(env(safe-area-inset-bottom,0px) + clamp(10px,1.8vh,18px));
+  transform:translateX(-50%);
+  padding:clamp(9px,1.5vh,13px) clamp(18px,5.5vw,26px);
+  animation:asomar .45s cubic-bezier(.2,1.3,.4,1) both;
+}
+.siguiente:active{ transform:translateX(-50%) translateY(2px) scale(.98) }
+.siguiente[hidden]{ display:none !important }
+@keyframes asomar{ from{opacity:0; transform:translateX(-50%) translateY(14px)} to{opacity:1; transform:translateX(-50%)} }
+
+.salida{
+  position:fixed; z-index:21; left:0; right:0;
+  bottom:calc(env(safe-area-inset-bottom,0px) + clamp(8px,1.6vh,14px));
+  text-align:center; font-size:var(--fs-nano); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--dim); background:none; border:0; cursor:pointer;
+  font-family:var(--mono); padding:8px; opacity:.42; transition:opacity .3s ease;
+}
+.salida:active{ opacity:1 }
+.salida[hidden]{ display:none !important }
+
+/* ==================================================================
+   7. ¿DE QUIÉN ES ESTO? (01)
+   ================================================================== */
+.objeto{ font-size:clamp(38px,14vw,64px); line-height:1 }
+.duelo{ display:flex; gap:clamp(7px,2.4vw,12px); width:100%; max-width:330px }
+.duelo button{
+  flex:1; border:0; border-radius:3px; cursor:pointer; touch-action:manipulation;
+  padding:clamp(11px,2vh,16px) 6px;
+  background:var(--panel); box-shadow:inset 0 0 0 1px var(--borde);
+  color:var(--ink); font-family:var(--mono); font-weight:700;
+  font-size:var(--fs-small); letter-spacing:.12em; text-transform:uppercase;
+  transition:transform .12s ease, background .2s ease;
+}
+.duelo button:active{ transform:scale(.96); background:rgba(125,255,207,.14) }
+.duelo.error{ animation:sacude .4s }
+.marcador-rondas{ display:flex; gap:6px }
+.marcador-rondas b{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.15) }
+.marcador-rondas b.on{ background:var(--neon); box-shadow:0 0 10px var(--sombra) }
+
+/* ==================================================================
+   8. VISOR + TECLADO (02)
+   ================================================================== */
+.visor{ display:flex; gap:9px; justify-content:center }
+.visor i{
+  width:clamp(34px,10.5vw,46px); height:clamp(40px,12.5vw,56px);
+  display:grid; place-items:center; border-radius:3px;
+  background:var(--panel); box-shadow:inset 0 0 0 1px var(--borde);
+  font-size:clamp(18px,6.2vw,27px); font-weight:700; font-style:normal; color:var(--neon);
+}
+.visor i.lleno{ box-shadow:inset 0 0 0 1px var(--neon), 0 0 18px var(--sombra) }
+.visor.error{ animation:sacude .4s }
+@keyframes sacude{ 0%,100%{transform:translateX(0)} 20%{transform:translateX(-9px)} 40%{transform:translateX(9px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
+
+.teclado{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(4px,1.4vw,8px); width:100%; max-width:238px }
+.tecla{
+  aspect-ratio:1.5; display:grid; place-items:center; border:0; border-radius:3px;
+  background:var(--panel); box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);
+  color:var(--ink); font-family:var(--mono); font-weight:700;
+  font-size:clamp(13px,4.3vw,18px); cursor:pointer; touch-action:manipulation;
+  transition:transform .1s ease, background .15s ease;
+}
+.tecla:active{ transform:scale(.93); background:rgba(125,255,207,.16) }
+.tecla.fn{ font-size:var(--fs-nano); letter-spacing:.06em; color:var(--dim) }
+
+/* ==================================================================
+   9. MEMORIA (03)
+   ================================================================== */
+.memoria{
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:clamp(5px,1.8vw,9px); width:100%; max-width:300px; touch-action:manipulation;
+}
+.memoria.bloqueada{ pointer-events:none }
+.carta{
+  position:relative; aspect-ratio:1; border:0; border-radius:3px; padding:0;
+  background:var(--panel); box-shadow:inset 0 0 0 1px var(--borde);
+  cursor:pointer; touch-action:manipulation; overflow:hidden;
+  font-size:clamp(17px,6vw,25px); line-height:1;
+  transition:transform .16s ease, box-shadow .3s ease, opacity .4s ease;
+}
+.carta::after{
+  content:''; position:absolute; inset:0; border-radius:3px;
+  background:repeating-linear-gradient(45deg, rgba(125,255,207,.07) 0 5px, transparent 5px 10px), var(--panel);
+  transition:opacity .22s ease;
+}
+.carta span{ position:relative; z-index:2; opacity:0; transform:scale(.5); transition:opacity .2s ease, transform .3s cubic-bezier(.2,1.6,.4,1) }
+.carta.vista::after{ opacity:0 }
+.carta.vista span{ opacity:1; transform:none }
+.carta.hecha{ box-shadow:inset 0 0 0 2px var(--neon), 0 0 18px var(--sombra); pointer-events:none }
+.carta.fallo{ animation:sacude .35s }
+.carta:active{ transform:scale(.95) }
+
+/* ==================================================================
+   10. CHIPS (04)
+   ================================================================== */
+.chips{ display:flex; flex-wrap:wrap; gap:clamp(5px,1.6vw,8px); justify-content:center; width:100%; max-width:340px }
+.chip{
+  border:0; border-radius:999px; cursor:pointer; touch-action:manipulation;
+  padding:clamp(7px,1.4vh,11px) clamp(10px,3.2vw,15px);
+  background:var(--panel); box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+  color:var(--ink); font-family:var(--mono); font-size:var(--fs-small);
+  transition:transform .12s ease, box-shadow .2s ease, background .2s ease;
+}
+.chip:active{ transform:scale(.95) }
+.chip.marcado{ background:rgba(125,255,207,.13); box-shadow:inset 0 0 0 1px var(--neon); color:var(--neon) }
+.chips.error{ animation:sacude .4s }
+
+/* ==================================================================
+   11. EL PRIMER VOLANTE (05)
+   ================================================================== */
+.carros{ display:flex; flex-direction:column; gap:clamp(5px,1.3vh,9px); width:100%; max-width:320px }
+.carro{
+  display:flex; align-items:center; gap:11px; text-align:left;
+  padding:clamp(8px,1.5vh,13px) clamp(10px,3.2vw,15px);
+  background:var(--panel); box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);
+  border:0; border-radius:3px; cursor:pointer; touch-action:manipulation;
+  color:var(--ink); font-family:var(--mono); font-size:var(--fs-small);
+  transition:transform .14s ease, box-shadow .25s ease, opacity .3s ease;
+}
+.carro .emo{ font-size:clamp(17px,5.5vw,24px); line-height:1 }
+.carro.elegido{ box-shadow:inset 0 0 0 2px var(--neon), 0 0 22px var(--sombra) }
+.carro.descartado{ opacity:.3 }
+.carro:active{ transform:scale(.98) }
+.carros.error{ animation:sacude .4s }
+
+/* ==================================================================
+   12. EL COFRE (06)
+   ================================================================== */
+.objetos{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(5px,1.7vw,9px); width:100%; max-width:270px }
+.caja{
+  position:relative; aspect-ratio:1; display:grid; place-items:center;
+  background:var(--panel); box-shadow:inset 0 0 0 1px var(--borde);
+  border:0; border-radius:3px; cursor:pointer; touch-action:manipulation;
+  font-size:clamp(18px,6.6vw,26px);
+  transition:transform .35s cubic-bezier(.2,.8,.3,1), opacity .4s ease, box-shadow .3s ease;
+}
+.caja span{ opacity:0; transform:scale(.4); transition:opacity .25s ease, transform .35s cubic-bezier(.2,1.6,.4,1) }
+.caja.abierta span{ opacity:1; transform:none }
+.caja.abierta{ background:transparent; box-shadow:inset 0 0 0 1px rgba(255,255,255,.07) }
+.caja::after{ content:'?'; position:absolute; font-size:var(--fs-body); font-weight:700; color:var(--dim); opacity:.45; transition:opacity .2s ease }
+.caja.abierta::after{ opacity:0 }
+.caja:active{ transform:scale(.94) }
+.caja.premio{ box-shadow:inset 0 0 0 2px var(--neon), 0 0 30px var(--sombra); animation:premio .6s ease-out }
+@keyframes premio{ 0%{transform:scale(1)} 45%{transform:scale(1.22)} 100%{transform:scale(1)} }
+.caja.aparta{ transform:translate(12px,-8px) rotate(9deg); opacity:.3 }
+.caja.vuelve{ transform:none; opacity:1 }
+.caja.brilla{ animation:brilla 1.5s ease-in-out infinite }
+@keyframes brilla{ 0%,100%{box-shadow:inset 0 0 0 1px var(--borde)} 50%{box-shadow:inset 0 0 0 1px var(--neon), 0 0 24px var(--sombra)} }
+
+/* ==================================================================
+   13. SEMÁFORO (07)
+   ================================================================== */
+.semaforo{
+  display:flex; flex-direction:column; gap:clamp(6px,1.6vw,10px);
+  padding:clamp(8px,2.2vw,13px); border-radius:999px;
+  background:var(--panel); box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);
+}
+.luz{ width:clamp(30px,9.5vw,44px); aspect-ratio:1; border-radius:50%; background:rgba(255,255,255,.06); transition:background .1s ease, box-shadow .1s ease }
+.luz.on-rojo{ background:#ff4d4d; box-shadow:0 0 26px rgba(255,77,77,.75) }
+.luz.on-ambar{ background:#ffc23d; box-shadow:0 0 26px rgba(255,194,61,.7) }
+.luz.on-verde{ background:#57e08a; box-shadow:0 0 26px rgba(87,224,138,.65) }
+.zona{
+  width:100%; max-width:300px; padding:clamp(11px,2.4vh,18px) 10px;
+  border-radius:4px; border:1px dashed var(--borde); background:rgba(255,255,255,.02);
+  cursor:pointer; touch-action:manipulation;
+  font-family:var(--mono); font-size:var(--fs-micro); letter-spacing:.2em;
+  text-transform:uppercase; color:var(--dim);
+  transition:transform .1s ease, background .15s ease;
+}
+.zona:active{ transform:scale(.98); background:rgba(125,255,207,.09) }
+.aciertos{ display:flex; gap:7px; justify-content:center }
+.aciertos b{ width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.14) }
+.aciertos b.on{ background:var(--neon); box-shadow:0 0 12px var(--sombra) }
+
+/* ==================================================================
+   14. BRUNO
+   ================================================================== */
+.perro{ width:clamp(94px,30vw,140px); height:auto; color:var(--neon); flex:0 0 auto }
+.perro .trazo{ fill:none; stroke:currentColor; stroke-width:5; stroke-linecap:round; stroke-linejoin:round }
+.perro .relleno{ fill:currentColor; stroke:none }
+.perro .lagrima{ animation:llorar 1.5s ease-in infinite }
+.perro .lagrima.b{ animation-delay:.6s }
+@keyframes llorar{ 0%{opacity:0; transform:translateY(-4px)} 30%{opacity:1} 100%{opacity:0; transform:translateY(14px)} }
+.perro .feliz{ opacity:0 }
+.perro.contento .lagrima{ opacity:0; animation:none }
+.perro.contento .triste{ opacity:0 }
+.perro.contento .feliz{ opacity:1 }
+.perro.contento{ animation:brinca .5s ease-in-out 2 }
+@keyframes brinca{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+.perro .cola{ transform-origin:42px 120px }
+.perro.contento .cola{ animation:cola .22s ease-in-out infinite alternate }
+@keyframes cola{ from{transform:rotate(-18deg)} to{transform:rotate(18deg)} }
+.barra{ width:100%; max-width:280px; height:9px; border-radius:999px; background:rgba(255,255,255,.08); box-shadow:inset 0 0 0 1px var(--borde); overflow:hidden }
+.barra i{ display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--neon),#b8fff0); box-shadow:0 0 14px var(--sombra); transition:width .1s linear }
+
+/* ==================================================================
+   15. LA PUERTA FINAL — arrastrar las 7 letras
+   ================================================================== */
+.huecos{ display:flex; gap:clamp(3px,1.1vw,6px); justify-content:center }
+.hueco{
+  width:clamp(30px,8.8vw,42px); height:clamp(38px,11vw,52px);
+  border-radius:3px; border:1px dashed var(--borde); background:rgba(255,255,255,.02);
+  display:grid; place-items:center; flex:0 0 auto;
+  transition:box-shadow .18s ease, background .18s ease;
+}
+.hueco.sobre{ box-shadow:0 0 0 2px var(--neon), 0 0 20px var(--sombra); background:rgba(125,255,207,.1) }
+.huecos.error{ animation:sacude .45s }
+.huecos.ok .hueco{ border-style:solid; box-shadow:inset 0 0 0 1px var(--neon) }
+
+.banco{
+  display:flex; flex-wrap:wrap; gap:clamp(4px,1.4vw,8px);
+  justify-content:center; align-items:center;
+  width:100%; min-height:clamp(44px,13vw,60px);
+  padding:clamp(5px,1.4vw,9px); border-radius:4px;
+  background:rgba(255,255,255,.02); box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);
+}
+.ficha{
+  width:clamp(30px,8.8vw,42px); height:clamp(38px,11vw,52px);
+  display:grid; place-items:center; border-radius:3px; flex:0 0 auto;
+  background:var(--panel); box-shadow:inset 0 0 0 1px var(--borde), 0 4px 12px rgba(0,0,0,.35);
+  color:var(--neon); font-family:var(--mono); font-weight:700;
+  font-size:clamp(15px,5.2vw,24px);
+  cursor:grab; touch-action:none; user-select:none;
+  transition:transform .14s ease, box-shadow .2s ease;
+}
+.ficha:active{ transform:scale(.95) }
+.ficha.volando{
+  position:fixed; z-index:60; margin:0; pointer-events:none; cursor:grabbing;
+  transform:scale(1.14); box-shadow:inset 0 0 0 1px var(--neon), 0 14px 34px rgba(0,0,0,.5);
+  transition:none;
+}
+
+/* ==================================================================
+   16. ESCAPARON + LA INVITACIÓN
+   ================================================================== */
+.felicidades{
+  font-family:var(--serif); font-weight:900; font-style:italic;
+  font-size:clamp(30px,min(11vw,6vh),58px); line-height:1;
+  color:var(--neon); letter-spacing:-.02em;
+  animation:latir 1.6s ease-in-out infinite;
+}
+@keyframes latir{ 0%,100%{transform:scale(1)} 50%{transform:scale(1.045)} }
+
+.clave{ display:flex; gap:clamp(3px,1.2vw,6px); justify-content:center }
+.clave i{
+  font-style:normal; font-weight:700; font-family:var(--mono);
+  font-size:clamp(15px,5.4vw,26px);
+  width:clamp(22px,6.8vw,36px); height:clamp(29px,8.8vw,46px);
+  display:grid; place-items:center; border-radius:3px;
+  background:var(--panel); box-shadow:inset 0 0 0 1.5px var(--neon);
+  color:var(--neon);
+  animation:voltea .5s cubic-bezier(.2,1.4,.4,1) both;
+}
+@keyframes voltea{ from{transform:rotateX(90deg) translateY(-10px); opacity:0} to{transform:none; opacity:1} }
+
+.nosotros{
+  font-family:var(--serif); font-weight:900; font-style:italic;
+  font-size:clamp(22px,min(8vw,4.4vh),40px); line-height:1.05;
+  color:var(--ink); letter-spacing:-.02em;
+}
+.nosotros em{ color:#c05c1e; font-style:italic }
+
+.invita{
+  font-family:var(--serif); font-weight:700;
+  font-size:clamp(15px,min(4.6vw,2.5vh),23px); line-height:1.32;
+  color:#5c4534; max-width:22ch;
+}
+.nombre{
+  font-family:var(--serif); font-weight:900; font-size:var(--fs-huge);
+  line-height:.9; letter-spacing:-.035em;
+  background:linear-gradient(145deg,#e0812f 0%,#c05c1e 45%,#a8432a 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 6px 20px rgba(192,92,30,.25));
+}
+.subnombre{
+  font-family:var(--serif); font-style:italic; font-weight:700;
+  font-size:clamp(13px,min(4.1vw,2.2vh),19px); color:var(--dim); max-width:26ch; line-height:1.35;
+}
+.cintillo{
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:var(--fs-nano); letter-spacing:.3em; text-transform:uppercase;
+  color:#c05c1e; padding:6px 14px; border-radius:999px;
+  background:rgba(255,255,255,.6); box-shadow:inset 0 0 0 1px rgba(192,92,30,.2);
+}
+
+/* ==================================================================
+   17. CUÁNDO Y DÓNDE
+   ================================================================== */
+.fecha-bloque{
+  width:100%; border-radius:16px; padding:clamp(11px,2.1vh,18px) clamp(12px,4vw,20px);
+  background:linear-gradient(160deg, rgba(255,255,255,.92), rgba(255,240,225,.72));
+  box-shadow:0 8px 26px rgba(192,92,30,.1), inset 0 0 0 1px rgba(192,92,30,.16);
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+}
+.fecha-dia{
+  font-family:var(--serif); font-weight:900;
+  font-size:clamp(21px,min(7.4vw,4vh),36px); line-height:1; color:#33231a; letter-spacing:-.02em;
+}
+.fecha-mes{
+  font-size:var(--fs-nano); letter-spacing:.34em; text-transform:uppercase; color:#c05c1e;
+}
+.fecha-hora{
+  font-family:var(--serif); font-style:italic; font-weight:700;
+  font-size:clamp(15px,min(4.8vw,2.6vh),24px); color:#8a5a33;
+}
+
+.cuenta{ display:flex; gap:clamp(5px,1.8vw,9px); justify-content:center; width:100% }
+.cuenta div{
+  flex:1 1 0; min-width:0; border-radius:12px;
+  padding:clamp(6px,1.2vh,10px) 2px;
+  background:rgba(255,255,255,.66); box-shadow:inset 0 0 0 1px rgba(192,92,30,.14);
+  display:flex; flex-direction:column; align-items:center; gap:1px;
+}
+.cuenta b{
+  font-family:var(--serif); font-weight:900;
+  font-size:clamp(17px,min(6vw,3.2vh),28px); line-height:1; color:#c05c1e;
+  font-variant-numeric:tabular-nums;
+}
+.cuenta span{ font-size:clamp(7px,2.1vw,9.5px); letter-spacing:.16em; text-transform:uppercase; color:var(--dim) }
+
+.dato{
+  width:100%; display:flex; align-items:center; gap:11px; text-align:left;
+  padding:clamp(8px,1.5vh,12px) clamp(11px,3.5vw,16px); border-radius:13px;
+  background:rgba(255,255,255,.6); box-shadow:inset 0 0 0 1px rgba(192,92,30,.13);
+}
+.dato .ic{
+  width:clamp(26px,7.5vw,34px); height:clamp(26px,7.5vw,34px); flex:0 0 auto;
+  display:grid; place-items:center; border-radius:50%;
+  background:linear-gradient(150deg,#ffd9b0,#f7b07a); color:#7a3d12;
+}
+.dato .ic svg{ width:52%; height:52% }
+.dato .k{ font-size:var(--fs-nano); letter-spacing:.2em; text-transform:uppercase; color:#b07a4e; display:block }
+.dato .v{ font-family:var(--serif); font-weight:700; font-size:clamp(13px,min(4.1vw,2.2vh),19px); color:#33231a; line-height:1.2 }
+
+.firma{
+  font-family:var(--serif); font-style:italic; font-weight:700;
+  font-size:clamp(13px,min(4.1vw,2.2vh),19px); color:#8a5a33; line-height:1.35;
+}
+.acciones{ display:flex; flex-direction:column; gap:8px; width:100%; align-items:center }
+.acciones .btn{ width:100%; max-width:320px }
+
+/* ==================================================================
+   18. ACCESIBILIDAD Y PANTALLAS DIMINUTAS
+   ================================================================== */
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.2s !important }
+  .sube{ opacity:1 !important }
+  .confeti, .globos{ display:none }
+}
+@media (max-height:660px){
+  :root{
+    --pad-top: calc(env(safe-area-inset-top,0px) + 58px);
+    --pad-bottom: calc(env(safe-area-inset-bottom,0px) + 34px);
+    --gap: clamp(4px,.9vh,8px);
+  }
+  body.modo-luz{ --pad-top: calc(env(safe-area-inset-top,0px) + 20px) }
+  .btn{ padding:8px 15px }
+  .consola{ min-height:2.5em }
+  .perro{ width:clamp(74px,23vw,100px) }
+  .objeto{ font-size:clamp(32px,11vw,48px) }
+}
+</style>
+</head>
+<body>
+
+<div class="fondo"></div>
+<div class="calidez" id="calidez"></div>
+<div class="rejilla"></div>
+<div class="globos" id="globos"></div>
+<div class="confeti" id="confeti"></div>
+
+<header class="hud" aria-hidden="true">
+  <div class="hud-linea">
+    <span class="sala">Sala 01</span>
+    <span class="temp" id="temp">8 &deg;C</span>
+    <span class="reloj" id="reloj">00:00</span>
+  </div>
+  <div class="palabra" id="palabra"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</header>
+
+<main class="escenario" id="escenario">
+
+  <!-- ============ 0 · LA PUERTA CERRADA ============ -->
+  <section class="escena activa" id="e-intro">
+    <div class="dentro">
+      <div class="sube etiqueta rojo">Acceso restringido</div>
+      <h1 class="sube titulo">Andrés y Cristina:<br>están encerrados</h1>
+      <p class="sube linea"><b>Siete cerraduras.</b> Cada una guarda una letra.</p>
+      <p class="sube linea tenue">Al final tendrán que <b>ordenar las siete letras</b> para abrir la puerta. Y nadie más podría hacerlo: las respuestas <b>sólo las saben ustedes dos</b>.</p>
+      <p class="sube linea tenue">La sala está a 8 °C. Uno de los dos ya se está quejando. El otro anda en bermudas.</p>
+      <button class="sube btn" id="btn-entrar" type="button">
+        Entrar (no hay de otra)
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ 1 · ¿DE QUIÉN ES ESTO? ============ -->
+  <section class="escena" id="e-c1">
+    <div class="dentro">
+      <div class="sube etiqueta">Cerradura 01/07 <span class="nivel" data-nivel="1"></span></div>
+      <h2 class="sube titulo">¿De quién<br>es esto?</h2>
+      <div class="sube objeto" id="objeto">☕</div>
+      <p class="sube linea" id="objeto-txt"></p>
+      <div class="sube duelo" id="duelo">
+        <button type="button" data-quien="A">Andrés</button>
+        <button type="button" data-quien="C">Cristina</button>
+      </div>
+      <div class="sube marcador-rondas" id="rondas"><b></b><b></b><b></b><b></b></div>
+      <div class="sube consola" id="consola1">Cuatro objetos. Cuatro aciertos seguidos.</div>
+      <button class="sube pista-btn" data-pistas="1">Pista · 3</button>
+    </div>
+  </section>
+
+  <!-- ============ 2 · CÓDIGO ============ -->
+  <section class="escena" id="e-c2">
+    <div class="dentro">
+      <div class="sube etiqueta">Cerradura 02/07 <span class="nivel" data-nivel="2"></span></div>
+      <h2 class="sube titulo">Código<br>de dos cifras</h2>
+      <p class="sube linea">Primero: <b>los años que llevan casados</b>. Después: <b>los años del que siempre llora</b>.</p>
+      <div class="sube visor" id="visor2"><i></i><i></i></div>
+      <div class="sube teclado" id="teclado2"></div>
+      <div class="sube consola" id="consola2">Dos dígitos. Sin espacios. Sin excusas.</div>
+      <button class="sube pista-btn" data-pistas="2">Pista · 3</button>
+    </div>
+  </section>
+
+  <!-- ============ 3 · MEMORIA ============ -->
+  <section class="escena" id="e-c3">
+    <div class="dentro">
+      <div class="sube etiqueta">Cerradura 03/07 <span class="nivel" data-nivel="3"></span></div>
+      <h2 class="sube titulo">Tres parejas</h2>
+      <p class="sube linea tenue">Doce casillas. Todo lo que hay aquí es suyo. Encuentren <b>tres parejas</b>.</p>
+      <div class="sube memoria" id="memoria" role="group" aria-label="Juego de memoria"></div>
+      <div class="sube consola" id="consola3">Volteen dos. A ver qué pasa.</div>
+      <button class="sube pista-btn" data-pistas="3">Pista · 3</button>
+    </div>
+  </section>
+
+  <!-- ============ INTERRUPCIÓN · BRUNO ============ -->
+  <section class="escena" id="e-bruno">
+    <div class="dentro">
+      <div class="sube etiqueta rojo">Interrupción no programada</div>
+      <h2 class="sube titulo">Alguien bloquea<br>el pasillo</h2>
+      <svg class="sube perro" id="perro" viewBox="0 0 200 190" aria-hidden="true">
+        <path class="trazo cola" d="M42 120q-22-6-26-26"/>
+        <path class="trazo" d="M62 66 56 16 92 44"/>
+        <path class="trazo" d="M138 66 144 16 108 44"/>
+        <path class="trazo" d="M62 66c0 34 8 56 26 70l12 10 12-10c18-14 26-36 26-70"/>
+        <circle class="relleno" cx="82" cy="84" r="6"/>
+        <circle class="relleno" cx="118" cy="84" r="6"/>
+        <path class="trazo lagrima" d="M82 96v14"/>
+        <path class="trazo lagrima b" d="M118 96v14"/>
+        <circle class="relleno" cx="100" cy="120" r="7"/>
+        <path class="trazo triste" d="M86 144q14-12 28 0"/>
+        <path class="trazo feliz" d="M86 134q14 14 28 0"/>
+        <path class="trazo" d="M70 168h22M108 168h22"/>
+      </svg>
+      <p class="sube linea">Se pegó con algo. <b>No fue grave.</b> Él cree que sí.</p>
+      <div class="sube barra"><i id="barra-mimos"></i></div>
+      <div class="sube consola" id="consola-bruno">Tóquenlo rápido, muchas veces. Ya saben qué quiere.</div>
+    </div>
+  </section>
+
+  <!-- ============ 4 · SELLOS DEL PASAPORTE ============ -->
+  <section class="escena" id="e-c4">
+    <div class="dentro">
+      <div class="sube etiqueta">Cerradura 04/07 <span class="nivel" data-nivel="4"></span></div>
+      <h2 class="sube titulo">Sellos<br>del pasaporte</h2>
+      <p class="sube linea tenue">Marquen los <b>cinco países</b> que están en el expediente. Uno de más y no abre.</p>
+      <div class="sube chips" id="chips"></div>
+      <button class="sube btn" id="btn-paises" type="button">Confirmar</button>
+      <div class="sube consola" id="consola4">Cinco sellos. Ni cuatro ni seis.</div>
+      <button class="sube pista-btn" data-pistas="4">Pista · 3</button>
+    </div>
+  </section>
+
+  <!-- ============ 5 · EL PRIMER VOLANTE ============ -->
+  <section class="escena" id="e-c5">
+    <div class="dentro">
+      <div class="sube etiqueta">Cerradura 05/07 <span class="nivel" data-nivel="5"></span></div>
+      <h2 class="sube titulo">El primer<br>volante</h2>
+      <p class="sube linea">¿En cuál de estos se animó <b>Andrés a aprender a manejar</b>?</p>
+      <div class="sube carros" id="carros"></div>
+      <div class="sube consola" id="consola5">Uno solo. El de los nervios.</div>
+      <button class="sube pista-btn" data-pistas="5">Pista · 3</button>
+    </div>
+  </section>
+
+  <!-- ============ 6 · EL COFRE ============ -->
+  <section class="escena" id="e-c6">
+    <div class="dentro">
+      <div class="sube etiqueta">Cerradura 06/07 <span class="nivel" data-nivel="6"></span></div>
+      <h2 class="sube titulo">Encuentren<br>la llave</h2>
+      <p class="sube linea tenue">Hay una llave escondida en una de las seis. Ábranlas.</p>
+      <div class="sube objetos" id="objetos" role="group" aria-label="Seis cajas"></div>
+      <div class="sube consola" id="consola6">Toquen una caja.</div>
+      <button class="sube pista-btn" data-pistas="6">Pista · 3</button>
+    </div>
+  </section>
+
+  <!-- ============ 7 · EL SEMÁFORO ============ -->
+  <section class="escena" id="e-c7">
+    <div class="dentro">
+      <div class="sube etiqueta rojo">Cerradura 07/07 <span class="nivel" data-nivel="7"></span></div>
+      <h2 class="sube titulo">Séptima<br>en rojo</h2>
+      <p class="sube linea tenue">Una vez pararon el tráfico de Bogotá para una foto. Repítanlo: toquen <b>sólo en rojo</b>, tres veces.</p>
+      <div class="sube semaforo" aria-hidden="true">
+        <span class="luz" id="luz-r"></span>
+        <span class="luz" id="luz-a"></span>
+        <span class="luz" id="luz-v"></span>
+      </div>
+      <div class="sube aciertos" id="aciertos"><b></b><b></b><b></b></div>
+      <button class="sube zona" id="zona" type="button">Tocar</button>
+      <div class="sube consola" id="consola7">Cada vez va más rápido. Un error y vuelven a cero.</div>
+      <button class="sube pista-btn" data-pistas="7">Pista · 3</button>
+    </div>
+  </section>
+
+  <!-- ============ LA PUERTA · ORDENAR LA PALABRA ============ -->
+  <section class="escena" id="e-armar">
+    <div class="dentro">
+      <div class="sube etiqueta">La puerta</div>
+      <h2 class="sube titulo">Ordenen<br>la palabra</h2>
+      <p class="sube linea tenue">Siete letras. Las ganaron una por una. <b>Arrástrenlas</b> a su lugar (o tóquenlas).</p>
+      <div class="sube huecos" id="huecos"></div>
+      <div class="sube banco" id="banco"></div>
+      <div class="sube consola" id="consola8">La puerta se abre con una sola palabra.</div>
+      <div class="sube" style="display:flex;gap:9px;flex-wrap:wrap;justify-content:center">
+        <button class="pista-btn" id="btn-limpiar" type="button">Devolver todas</button>
+        <button class="pista-btn" data-pistas="8">Pista · 3</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ¡ESCAPARON! ============ -->
+  <section class="escena" id="e-escape">
+    <div class="dentro">
+      <div class="sube cintillo">Puerta abierta</div>
+      <h2 class="sube felicidades">¡Escaparon!</h2>
+      <p class="sube linea">Acaban de salir de la <b>SALA 01</b> en <b id="tiempo-final">--:--</b>.</p>
+      <div class="sube clave" id="clave" aria-label="FAMILIA"></div>
+      <p class="sube linea tenue">Esa era la palabra clave. Y no la escogimos al azar.</p>
+      <button class="sube btn" id="btn-porque" type="button">¿Por qué esa palabra?</button>
+    </div>
+  </section>
+
+  <!-- ============ LA INVITACIÓN ============ -->
+  <section class="escena" id="e-final">
+    <div class="dentro">
+      <div class="sube cintillo">🍼 Se viene algo grande 🎈</div>
+      <h2 class="sube nosotros">Porque somos<br><em>nosotros, su familia</em></h2>
+      <p class="sube invita">y queremos invitarlos a celebrar<br>la llegada del nuevo integrante</p>
+      <h3 class="sube nombre">Noah</h3>
+      <p class="sube subnombre">con un almuerzo delicioso<br>y una tarde de pura diversión</p>
+      <button class="sube btn" id="btn-datos" type="button">
+        ¿Cuándo y dónde?
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ CUÁNDO Y DÓNDE ============ -->
+  <section class="escena" id="e-datos">
+    <div class="dentro">
+      <div class="sube cintillo">Aparten el día</div>
+
+      <div class="sube fecha-bloque">
+        <span class="fecha-mes">Sábado</span>
+        <span class="fecha-dia" id="f-dia">10 de octubre</span>
+        <span class="fecha-hora" id="f-hora">12:30 del mediodía</span>
+      </div>
+
+      <div class="sube cuenta" id="cuenta" aria-label="Cuenta regresiva">
+        <div><b id="cd-d">00</b><span>días</span></div>
+        <div><b id="cd-h">00</b><span>horas</span></div>
+        <div><b id="cd-m">00</b><span>min</span></div>
+        <div><b id="cd-s">00</b><span>seg</span></div>
+      </div>
+
+      <div class="sube dato">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.4 7-11a7 7 0 1 0-14 0c0 4.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+        <span><span class="k">Dónde</span><span class="v" id="d-lugar"></span></span>
+      </div>
+
+      <div class="sube dato">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v8a3 3 0 0 0 6 0V3M7 11v10"/><path d="M17 3c-2 2-2.5 4-2.5 6.5S16 13 17 13v8"/></svg></span>
+        <span><span class="k">El plan</span><span class="v" id="d-plan"></span></span>
+      </div>
+
+      <div class="sube acciones">
+        <a class="btn" id="btn-rsvp" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 21l2.2-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>
+          Confirmar invitación
+        </a>
+        <a class="btn hueco-btn" id="btn-mapa" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 20l-6 2V6l6-2 6 2 6-2v16l-6 2-6-2z"/><path d="M9 4v16M15 6v16"/></svg>
+          Abrir ubicación
+        </a>
+      </div>
+
+      <p class="sube firma">Con todo el amor,<br><b>su familia</b></p>
+    </div>
+  </section>
+
+</main>
+
+<button class="sonido" id="btn-sonido" type="button" aria-label="Silenciar la música">
+  <svg class="suena" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+  <svg class="mudo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6M21 9l-5 6"/></svg>
+</button>
+
+<button class="btn siguiente" id="btn-siguiente" type="button" hidden>
+  <span id="btn-siguiente-txt">Siguiente cerradura</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg>
+</button>
+
+<button class="salida" id="btn-salida" type="button" hidden>ábranme, no quiero jugar &rarr;</button>
+
+<script>
+/* ==================================================================
+   CONFIGURACIÓN  ->  LO ÚNICO QUE HAY QUE EDITAR
+   ================================================================== */
+const EVENTO = {
+  diaSemana: "Sábado",
+  fecha:     "10 de octubre",
+  hora:      "12:30 del mediodía",
+  lugar:     "La casa de la mamita",
+  plan:      "Almuerzo y tarde de diversión",
+
+  // Para la cuenta regresiva (mes en número normal: 10 = octubre).
+  // Usa la hora del propio celular o computador de quien abre el link.
+  cuando: { anio:2026, mes:10, dia:10, hora:12, minuto:30 },
+
+  // Link corto de Google Maps: en celular abre directo la app de mapas
+  ubicacion: "https://maps.app.goo.gl/5PxhmZWkUpTtSuLq8",
+
+  // Confirmación por WhatsApp (57 = Colombia). Abre la app con el mensaje listo.
+  whatsapp: {
+    numero:  "573176708598",
+    mensaje: "HOLA HIJA, RECIBIMOS LA INVITACIÓN. NUESTRA RESPUESTA ES: ...."
+  }
+};
+
+/* ==================================================================
+   MÚSICA
+   Los archivos viven en /assets. Los espacios del nombre van como %20
+   para que funcionen igual en el celular, en GitHub Pages y local.
+   ================================================================== */
+const AUDIO = {
+  suspenso:   'assets/Audio%20Suspenso.mp3',    // suena toda la sala, en bucle
+  invitacion: 'assets/Audio%20Invitacion.mp3',  // entra cuando escapan
+  volumen: 0.6,
+  solape: 3          // segundos de cruce: para el bucle y para el cambio
+};
+
+/* Respuestas de las cerraduras (todas salen de datos reales de ellos) */
+const CLAVES = {
+  objetos: [
+    { ico:'☕',  txt:'Un tinto caliente. Bien oscuro.',                      quien:'C' },
+    { ico:'🩳', txt:'Unas bermudas. En cualquier clima, a cualquier hora.',  quien:'A' },
+    { ico:'🍰', txt:'Un merengón entero. Nadie lo va a compartir.',          quien:'C' },
+    { ico:'🧥', txt:'Un saco grueso, sin estrenar. Aquí nadie tiene frío.',  quien:'A' }
+  ],
+  codigo: "35",                                               // 3 de casados + 5 de Bruno
+  sellos: ['Portugal','Suiza','Italia','España','Chile'],
+  senuelos: ['Japón','Grecia','Egipto','Canadá'],
+  carros: [
+    { ico:'🚗', nom:'Kia Picanto',   pie:'el chiquito',                 correcto:true },
+    { ico:'🚙', nom:'Volkswagen',    pie:'el que ya vendieron' },
+    { ico:'🛻', nom:'Kia Sportage',  pie:'la que están estrenando' }
+  ]
+};
+
+/* Las 7 letras, en el orden en que se ganan. Ellos las ordenan al final. */
+const LETRAS = ['A','I','L','F','A','M','I'];
+const PALABRA_FINAL = 'FAMILIA';
+
+/* Tres pistas por cerradura, pedibles en cualquier momento */
+const PISTAS = {
+  1: ['Uno de los dos no toma nada caliente. Nunca.',
+      'El que anda en bermudas es el mismo que jamás usa saco.',
+      'El tinto y el merengón son de ella. Las bermudas y el saco sin estrenar, de él.'],
+  2: ['Son dos números de un solo dígito cada uno.',
+      'El primero: cuántos aniversarios de matrimonio llevan.',
+      'El segundo tiene cuatro patas, orejas paradas y mucho drama. Ya casi.'],
+  3: ['No volteen a lo loco: memoricen dónde quedó cada cosa.',
+      'Sólo necesitan tres parejas, no las seis.',
+      'Si las dos son iguales se quedan destapadas. Si no, se tapan otra vez.'],
+  4: ['Son cinco exactos. Ni cuatro ni seis.',
+      'Cuatro quedan en Europa. El quinto, bien al sur del continente americano.',
+      'Portugal, Suiza, Italia, España (ahí está el Bernabéu)... y Chile.'],
+  5: ['No fue en la camioneta que están estrenando ahora.',
+      'Fue en el más pequeño de los tres.',
+      'En el Kia Picanto. Que ni siquiera era de ustedes: se lo prestaron.'],
+  6: ['Ábranlas todas. Después piensen.',
+      'Ninguna de las cinco normales tiene la llave adentro.',
+      'Lo que brilla no era una distracción: la llave está dentro del cofre. Vuelvan a tocarlo.'],
+  7: ['Sólo cuenta el rojo. Ni el ámbar ni el verde.',
+      'Son tres aciertos seguidos: un error los devuelve a cero.',
+      'No se adelanten al ámbar. Esperen a que el rojo prenda del todo y ahí sí.'],
+  8: ['Siete letras: son las mismas que fueron ganando cerradura por cerradura.',
+      'Empieza por F y termina por A.',
+      'Es lo que son ustedes dos, y lo que está a punto de crecer: F-A-M-I-L-I-A.']
+};
+
+/* ==================================================================
+   MOTOR DEL ESCAPE ROOM
+   ================================================================== */
+(function () {
+  'use strict';
+
+  var $ = function (s) { return document.querySelector(s); };
+  var body = document.body;
+
+  var E = {
+    intro:$('#e-intro'), c1:$('#e-c1'), c2:$('#e-c2'), c3:$('#e-c3'), bruno:$('#e-bruno'),
+    c4:$('#e-c4'), c5:$('#e-c5'), c6:$('#e-c6'), c7:$('#e-c7'),
+    armar:$('#e-armar'), escape:$('#e-escape'), final:$('#e-final'), datos:$('#e-datos')
+  };
+  var actual = E.intro;
+  var ganadas = 0, arranque = 0, tictac = null, tiempoFin = '--:--';
+
+  /* ==================================================================
+     MOTOR DE SONIDO
+     - El suspenso se repite sin corte: 3 s antes de acabarse arranca
+       otra copia y se cruzan los volúmenes.
+     - Al escapar, el suspenso baja mientras la invitación sube (3 s).
+     ================================================================== */
+  var Sonido = (function () {
+    var SOLAPE = AUDIO.solape * 1000;
+    var callado = false, arrancado = false, cruzando = false;
+    var activo = null, reserva = null, vigia = null;
+    var todas = [];
+
+    function crear(src, enBucle) {
+      var a = new Audio(src);
+      a.preload = 'auto';
+      a.loop = !!enBucle;
+      a.volume = 0;
+      todas.push(a);
+      return a;
+    }
+    function tope() { return callado ? 0 : AUDIO.volumen; }
+
+    /* Sube o baja el volumen de una pista poco a poco */
+    function fundir(a, destino, ms, alFinal) {
+      if (!a) { return; }
+      clearInterval(a._fade);
+      var ini = a.volume, t0 = Date.now();
+      a._fade = setInterval(function () {
+        var p = Math.min(1, (Date.now() - t0) / ms);
+        a.volume = Math.max(0, Math.min(1, ini + (destino - ini) * p));
+        if (p >= 1) { clearInterval(a._fade); if (alFinal) { alFinal(); } }
+      }, 50);
+    }
+    function sonar(a) {
+      var intento = a.play();
+      if (intento && intento.catch) { intento.catch(function () {}); }
+    }
+
+    /* Bucle sin silencio: cruza con una segunda copia del mismo archivo */
+    function vigilarBucle() {
+      clearInterval(vigia);
+      vigia = setInterval(function () {
+        if (!activo || activo.paused || cruzando) { return; }
+        var dur = activo.duration;
+        if (!isFinite(dur) || dur <= 0) { return; }
+        if (activo.currentTime >= dur - AUDIO.solape) {
+          cruzando = true;
+          var saliente = activo, entrante = reserva;
+          try { entrante.currentTime = 0; } catch (e) {}
+          entrante.volume = 0;
+          sonar(entrante);
+          fundir(entrante, tope(), SOLAPE);
+          fundir(saliente, 0, SOLAPE, function () {
+            saliente.pause();
+            cruzando = false;
+          });
+          activo = entrante; reserva = saliente;
+        }
+      }, 200);
+    }
+
+    return {
+      /* Arranca con el primer toque (los navegadores no permiten antes) */
+      arrancar: function () {
+        if (arrancado) { return; }
+        arrancado = true;
+        activo  = crear(AUDIO.suspenso, false);
+        reserva = crear(AUDIO.suspenso, false);
+        sonar(activo);
+        fundir(activo, tope(), 1200);
+        vigilarBucle();
+      },
+      /* Cruce hacia la música de la invitación */
+      celebrar: function () {
+        if (!arrancado) { arrancado = true; }   // por si entraron con el atajo
+        clearInterval(vigia);
+        cruzando = true;
+        [activo, reserva].forEach(function (a) {
+          if (a) { fundir(a, 0, SOLAPE, function () { a.pause(); }); }
+        });
+        var fiesta = crear(AUDIO.invitacion, true);
+        sonar(fiesta);
+        fundir(fiesta, tope(), SOLAPE);
+        activo = fiesta; reserva = null;
+      },
+      alternarSilencio: function () {
+        callado = !callado;
+        todas.forEach(function (a) {
+          if (!a.paused) { fundir(a, tope(), 300); }
+          else { clearInterval(a._fade); a.volume = 0; }   // la reserva espera en cero
+        });
+        return callado;
+      },
+      /* Sólo para revisar el cruce con ?debug en la URL */
+      estado: function () {
+        function foto(a) {
+          if (!a) { return null; }
+          return {
+            src: a.src.split('/').pop(),
+            vol: Math.round(a.volume * 100) / 100,
+            t: Math.round(a.currentTime),
+            dur: isFinite(a.duration) ? Math.round(a.duration) : null,
+            pausado: a.paused
+          };
+        }
+        return { activo: foto(activo), reserva: foto(reserva), callado: callado,
+                 todas: todas.map(foto) };
+      },
+      adelantar: function (segundosDelFinal) {   // sólo para pruebas
+        if (activo && isFinite(activo.duration)) {
+          activo.currentTime = Math.max(0, activo.duration - segundosDelFinal);
+        }
+      }
+    };
+  })();
+  if (location.search.indexOf('debug') !== -1) { window.__sonido = Sonido; }
+
+  // Cualquier primer toque en la pantalla enciende la música
+  document.addEventListener('pointerdown', function () { Sonido.arrancar(); }, { once:true });
+  $('#btn-sonido').addEventListener('click', function (e) {
+    e.stopPropagation();
+    Sonido.arrancar();
+    this.classList.toggle('callado', Sonido.alternarSilencio());
+  });
+
+  /* ---------- Datos del evento ---------- */
+  $('#f-dia').textContent   = EVENTO.fecha;
+  $('#f-hora').textContent  = EVENTO.hora;
+  $('#d-lugar').textContent = EVENTO.lugar;
+  $('#d-plan').textContent  = EVENTO.plan;
+  document.querySelector('.fecha-mes').textContent = EVENTO.diaSemana;
+  $('#btn-mapa').href = EVENTO.ubicacion;
+  $('#btn-rsvp').href = 'https://wa.me/' + EVENTO.whatsapp.numero +
+                        '?text=' + encodeURIComponent(EVENTO.whatsapp.mensaje);
+
+  /* ---------- Indicadores de dificultad ---------- */
+  document.querySelectorAll('[data-nivel]').forEach(function (n) {
+    var lvl = parseInt(n.dataset.nivel, 10);
+    for (var i = 1; i <= 7; i++) {
+      var b = document.createElement('b');
+      if (i <= lvl) { b.className = 'on'; }
+      n.appendChild(b);
+    }
+  });
+
+  /* ---------- Anti-recorte: si no cabe, se escala (nunca se corta) ---------- */
+  function ajustar() {
+    var d = actual.querySelector('.dentro');
+    if (!d) { return; }
+    d.style.transform = '';
+    var cs = getComputedStyle(actual);
+    var libre = actual.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    var pide = d.scrollHeight;
+    if (pide > libre && libre > 0) {
+      d.style.transformOrigin = 'center center';
+      d.style.transform = 'scale(' + Math.max(0.58, libre / pide).toFixed(4) + ')';
+    }
+  }
+
+  function mostrar(nueva) {
+    if (nueva === actual) { return; }
+    var vieja = actual;
+    vieja.classList.remove('activa');
+    vieja.classList.add('saliendo');
+    setTimeout(function () { vieja.classList.remove('saliendo'); }, 470);
+    actual = nueva;
+    actual.classList.add('activa');
+    ajustar();
+  }
+
+  /* ---------- Cronómetro y termómetro ---------- */
+  function formato(ms) {
+    var s = Math.floor(ms / 1000);
+    return ('0' + Math.floor(s / 60)).slice(-2) + ':' + ('0' + (s % 60)).slice(-2);
+  }
+  function arrancarReloj() {
+    arranque = Date.now();
+    tictac = setInterval(function () {
+      var t = Date.now() - arranque;
+      $('#reloj').textContent = formato(t);
+      var grados = Math.max(4, 8 - Math.floor(t / 45000));
+      $('#temp').innerHTML = grados + ' &deg;C';
+    }, 250);
+  }
+  function pararReloj() {
+    if (tictac) { clearInterval(tictac); tictac = null; }
+    tiempoFin = arranque ? formato(Date.now() - arranque) : '--:--';
+  }
+
+  /* ---------- Ganar una letra: la sala se calienta un poco ---------- */
+  function ganarLetra() {
+    var casilla = $('#palabra').children[ganadas];
+    var letra = LETRAS[ganadas];
+    ganadas++;
+    if (casilla) { casilla.textContent = letra; casilla.classList.add('llena'); }
+    $('#calidez').style.opacity = (ganadas / LETRAS.length * 0.32).toFixed(3);
+    return letra;
+  }
+  function decir(sel, html, mal) {
+    var c = $(sel);
+    c.innerHTML = '<span>' + html + '</span>';   // un solo hijo: el flex no parte el texto
+    c.classList.toggle('mal', !!mal);
+    c.classList.remove('parpadeo');
+    void c.offsetWidth;
+    c.classList.add('parpadeo');
+  }
+  /* ---------- Nada avanza solo: siempre espera un toque ----------
+     `siguiente` puede ser una escena o una función.                */
+  var pendiente = null;
+  function pedirSiguiente(siguiente, etiqueta) {
+    pendiente = siguiente;
+    $('#btn-siguiente-txt').textContent = etiqueta || 'Siguiente cerradura';
+    $('#btn-siguiente').hidden = false;
+    $('#btn-salida').hidden = true;          // un solo botón a la vez, sin ruido
+    body.classList.add('con-siguiente');     // la escena cede espacio abajo
+    ajustar();
+  }
+  $('#btn-siguiente').addEventListener('click', function () {
+    var destino = pendiente;
+    pendiente = null;
+    this.hidden = true;
+    body.classList.remove('con-siguiente');
+    if (!body.classList.contains('modo-luz')) { $('#btn-salida').hidden = false; }
+    if (typeof destino === 'function') { destino(); } else if (destino) { mostrar(destino); }
+  });
+
+  function resolver(consolaSel, texto, siguiente, etiqueta) {
+    var L = ganarLetra();
+    decir(consolaSel, texto + ' Se llevan la letra <b>' + L + '</b>.');
+    pedirSiguiente(siguiente, etiqueta);
+  }
+
+  /* ---------- Pistas ---------- */
+  document.querySelectorAll('[data-pistas]').forEach(function (btn) {
+    var id = btn.dataset.pistas;
+    var lista = PISTAS[id] || [];
+    var usadas = 0;
+    btn.addEventListener('click', function () {
+      if (usadas >= lista.length) { return; }
+      decir('#consola' + id, '<b>Pista ' + (usadas + 1) + ':</b> ' + lista[usadas]);
+      usadas++;
+      var quedan = lista.length - usadas;
+      btn.textContent = quedan > 0 ? ('Pista · ' + quedan) : 'Sin pistas';
+      if (quedan === 0) { btn.disabled = true; }
+    });
+  });
+
+  function barajar(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  /* ==================================================================
+     01 · ¿DE QUIÉN ES ESTO?
+     ================================================================== */
+  (function () {
+    var ico = $('#objeto'), txt = $('#objeto-txt'), duelo = $('#duelo');
+    var marcas = $('#rondas').children;
+    var lista = barajar(CLAVES.objetos.slice());
+    var ronda = 0, listo = false;
+
+    function pintar() {
+      ico.textContent = lista[ronda].ico;
+      txt.textContent = lista[ronda].txt;
+      for (var i = 0; i < marcas.length; i++) { marcas[i].className = i < ronda ? 'on' : ''; }
+    }
+    duelo.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-quien]');
+      if (!b || listo) { return; }
+      if (b.dataset.quien === lista[ronda].quien) {
+        ronda++;
+        if (ronda >= lista.length) {
+          listo = true;
+          for (var i = 0; i < marcas.length; i++) { marcas[i].className = 'on'; }
+          resolver('#consola1', '<b>Cuatro de cuatro.</b> Se conocen demasiado bien.', E.c2);
+        } else {
+          decir('#consola1', 'Correcto. Van <b>' + ronda + ' de ' + lista.length + '</b>.');
+          pintar();
+        }
+      } else {
+        duelo.classList.add('error');
+        setTimeout(function () { duelo.classList.remove('error'); }, 420);
+        decir('#consola1', 'No. Y llevan años viviendo juntos.', true);
+      }
+    });
+    pintar();
+  })();
+
+  /* ==================================================================
+     02 · CÓDIGO DE DOS CIFRAS
+     ================================================================== */
+  (function () {
+    var visor = $('#visor2'), teclado = $('#teclado2');
+    var buffer = '', listo = false, fallos = 0;
+
+    function pintar() {
+      var c = visor.children;
+      for (var i = 0; i < c.length; i++) {
+        c[i].textContent = buffer[i] || '';
+        c[i].classList.toggle('lleno', !!buffer[i]);
+      }
+    }
+    function revisar() {
+      if (buffer.length < 2 || listo) { return; }
+      if (buffer === CLAVES.codigo) {
+        listo = true;
+        resolver('#consola2', '<b>' + CLAVES.codigo + '.</b> Tres de casados y cinco de llanto.', E.c3);
+      } else {
+        fallos++;
+        visor.classList.add('error');
+        setTimeout(function () { visor.classList.remove('error'); }, 420);
+        decir('#consola2', 'Nop. Ese no.' + (fallos >= 2 ? ' Son dos números pequeños: no se compliquen.' : ''), true);
+        buffer = '';
+        setTimeout(pintar, 300);
+      }
+    }
+    ['1','2','3','4','5','6','7','8','9','C','0','OK'].forEach(function (t) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tecla' + (t === 'C' || t === 'OK' ? ' fn' : '');
+      b.textContent = t;
+      b.addEventListener('click', function () {
+        if (listo) { return; }
+        if (t === 'C') { buffer = ''; pintar(); return; }
+        if (t === 'OK') { revisar(); return; }
+        if (buffer.length < 2) { buffer += t; pintar(); }
+        if (buffer.length === 2) { setTimeout(revisar, 280); }
+      });
+      teclado.appendChild(b);
+    });
+    pintar();
+  })();
+
+  /* ==================================================================
+     03 · MEMORIA — taps blindados
+     ================================================================== */
+  (function () {
+    var grid = $('#memoria');
+    var META = 3, hechas = 0, listo = false, abiertas = [];
+    var pares = [
+      { id:'viaje', ico:'✈️' }, { id:'anillo', ico:'💍' }, { id:'tinto', ico:'☕' },
+      { id:'perro', ico:'🐕' }, { id:'apto',   ico:'🏢' }, { id:'carro', ico:'🚙' }
+    ];
+    var mazo = [];
+    pares.forEach(function (p) { mazo.push(p, p); });
+    barajar(mazo);
+
+    mazo.forEach(function (p) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'carta';
+      b.innerHTML = '<span>' + p.ico + '</span>';
+      b.dataset.id = p.id;
+
+      b.addEventListener('click', function () {
+        if (listo) { return; }
+        if (b.classList.contains('vista') || b.classList.contains('hecha')) { return; }
+        if (abiertas.length >= 2) { return; }
+
+        b.classList.add('vista');
+        abiertas.push(b);
+        if (abiertas.length < 2) { return; }
+
+        grid.classList.add('bloqueada');
+        var a = abiertas[0], c = abiertas[1];
+
+        if (a.dataset.id === c.dataset.id) {
+          setTimeout(function () {
+            a.classList.add('hecha'); c.classList.add('hecha');
+            abiertas = [];
+            grid.classList.remove('bloqueada');
+            hechas++;
+            if (hechas >= META) {
+              listo = true;
+              resolver('#consola3', '<b>Tres parejas.</b> Memoria intacta.', E.bruno, 'Seguir por el pasillo');
+            } else {
+              decir('#consola3', '¡Pareja! Van <b>' + hechas + ' de ' + META + '</b>.');
+            }
+          }, 380);
+        } else {
+          setTimeout(function () {
+            a.classList.remove('vista'); c.classList.remove('vista');
+            a.classList.add('fallo'); c.classList.add('fallo');
+            setTimeout(function () { a.classList.remove('fallo'); c.classList.remove('fallo'); }, 360);
+            abiertas = [];
+            grid.classList.remove('bloqueada');
+          }, 760);
+          decir('#consola3', 'No. Pero ya saben dónde están.');
+        }
+      });
+      grid.appendChild(b);
+    });
+  })();
+
+  /* ==================================================================
+     INTERRUPCIÓN · BRUNO
+     ================================================================== */
+  var arrancarFuga = null;
+  (function () {
+    var perro = $('#perro'), barra = $('#barra-mimos');
+    var mimos = 0, listo = false, fuga = null;
+    var voces = ['sigan', 'más', 'eso', 'no paren', 'otra vez', 'ay, qué rico', 'ya casi'];
+    var v = 0;
+
+    function pintar() { barra.style.width = Math.min(100, mimos) + '%'; }
+    function acariciar(e) {
+      if (listo) { return; }
+      e.preventDefault();
+      mimos += 9; pintar();
+      if (mimos > 45) { perro.classList.add('contento'); }
+      if (mimos >= 100) { ganar(); return; }
+      if (mimos % 18 < 9) { decir('#consola-bruno', voces[v++ % voces.length]); }
+    }
+    function ganar() {
+      listo = true;
+      clearInterval(fuga);
+      mimos = 100; pintar();
+      perro.classList.add('contento');
+      decir('#consola-bruno', 'Listo. <b>Bruno</b> se corre y los deja pasar. Cobró su peaje.');
+      pedirSiguiente(E.c4, 'Seguir por el pasillo');
+    }
+    arrancarFuga = function () {
+      clearInterval(fuga);
+      fuga = setInterval(function () {
+        if (listo) { return; }
+        if (mimos > 0) { mimos -= 1.4; if (mimos < 0) { mimos = 0; } pintar(); }
+        if (mimos < 45) { perro.classList.remove('contento'); }
+      }, 110);
+    };
+    perro.addEventListener('pointerdown', acariciar);
+    E.bruno.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('svg')) { return; }
+      acariciar(e);
+    });
+  })();
+
+  /* ==================================================================
+     04 · SELLOS DEL PASAPORTE
+     ================================================================== */
+  (function () {
+    var caja = $('#chips'), btn = $('#btn-paises'), listo = false;
+    barajar(CLAVES.sellos.concat(CLAVES.senuelos)).forEach(function (p) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip';
+      b.textContent = p;
+      b.addEventListener('click', function () { if (!listo) { b.classList.toggle('marcado'); } });
+      caja.appendChild(b);
+    });
+    btn.addEventListener('click', function () {
+      if (listo) { return; }
+      var elegidos = [];
+      Array.prototype.forEach.call(caja.children, function (c) {
+        if (c.classList.contains('marcado')) { elegidos.push(c.textContent); }
+      });
+      var ok = elegidos.length === CLAVES.sellos.length &&
+               elegidos.every(function (p) { return CLAVES.sellos.indexOf(p) !== -1; });
+      if (ok) {
+        listo = true;
+        resolver('#consola4', '<b>Cinco sellos.</b> Y en uno de ellos hay un estadio con nombre propio.', E.c5);
+      } else {
+        caja.classList.add('error');
+        setTimeout(function () { caja.classList.remove('error'); }, 420);
+        decir('#consola4', elegidos.length !== 5
+          ? 'Son exactamente cinco. Llevan ' + elegidos.length + '.'
+          : 'Cinco, pero hay uno ahí que no les suena de nada. Revisen.', true);
+      }
+    });
+  })();
+
+  /* ==================================================================
+     05 · EL PRIMER VOLANTE (el Picanto prestado)
+     ================================================================== */
+  (function () {
+    var caja = $('#carros'), listo = false;
+    barajar(CLAVES.carros.slice()).forEach(function (c) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'carro';
+      b.innerHTML = '<span class="emo">' + c.ico + '</span>' +
+                    '<span><b>' + c.nom + '</b><br><span style="opacity:.55">' + c.pie + '</span></span>';
+      b.addEventListener('click', function () {
+        if (listo) { return; }
+        if (c.correcto) {
+          listo = true;
+          b.classList.add('elegido');
+          Array.prototype.forEach.call(caja.children, function (o) {
+            if (o !== b) { o.classList.add('descartado'); }
+          });
+          resolver('#consola5', '<b>El Picanto.</b> Chiquito, prestado, ni siquiera era de ustedes. Pero ahí fue donde Andrés perdió el miedo.', E.c6);
+        } else {
+          caja.classList.add('error');
+          setTimeout(function () { caja.classList.remove('error'); }, 420);
+          decir('#consola5', 'No. En ese ya sabía manejar.', true);
+        }
+      });
+      caja.appendChild(b);
+    });
+  })();
+
+  /* ==================================================================
+     06 · LA LLAVE — la trampa: SIEMPRE está en la última que abran.
+     El contenido no vive en la caja, sino en una fila. Da igual el
+     orden en que toquen: primero ven los cinco recuerdos, y la sexta
+     caja (la que sea) es la que tiene la llave.
+     ================================================================== */
+  (function () {
+    var grid = $('#objetos');
+    var abiertas = 0, resuelto = false;
+    var TOTAL = 6;
+
+    var recuerdos = barajar([
+      { ico:'🧳', txt:'Una maleta con más sellos que la mayoría. Pero aquí no hay llave.' },
+      { ico:'📸', txt:'Una foto sobre una cebra peatonal: el día que pararon la Séptima. Tampoco.' },
+      { ico:'💍', txt:'Dos argollas negras, negrísimas. Ya abrieron lo que tenían que abrir. No es esta.' },
+      { ico:'🩳', txt:'Unas bermudas. Aquí hace 8 grados y a alguien le siguen pareciendo suficientes. Nada.' },
+      { ico:'☕',  txt:'Un tinto caliente, intacto: alguien en esta pareja no toma nada caliente. Sigan.' }
+    ]);
+
+    for (var i = 0; i < TOTAL; i++) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'caja';
+      b.innerHTML = '<span></span>';
+
+      b.addEventListener('click', function () {
+        var caja = this;
+        if (resuelto || caja.classList.contains('abierta')) { return; }
+        caja.classList.add('abierta');
+        abiertas++;
+
+        if (abiertas < TOTAL) {                    // aún quedan cajas: sale un recuerdo
+          var r = recuerdos[abiertas - 1];
+          caja.querySelector('span').textContent = r.ico;
+          decir('#consola6', r.txt);
+        } else {                                   // la última, sea cual sea: la llave
+          resuelto = true;
+          caja.classList.add('premio');
+          caja.querySelector('span').textContent = '🔑';
+          resolver('#consola6',
+            '<b>🔑 La llave estaba en la última.</b> Siempre está en la última: por eso tocaba abrirlas todas.',
+            E.c7);
+        }
+      });
+      grid.appendChild(b);
+    }
+  })();
+
+  /* ==================================================================
+     07 · SÉPTIMA EN ROJO
+     ================================================================== */
+  var arrancarSemaforo = null;
+  (function () {
+    var luces = { rojo:$('#luz-r'), ambar:$('#luz-a'), verde:$('#luz-v') };
+    var zona = $('#zona'), marcas = $('#aciertos').children;
+    var ciclo = ['verde','ambar','rojo'], paso = 0;
+    var estado = 'verde', aciertos = 0, listo = false, timer = null;
+
+    function pintar() {
+      luces.rojo.className  = 'luz' + (estado === 'rojo'  ? ' on-rojo'  : '');
+      luces.ambar.className = 'luz' + (estado === 'ambar' ? ' on-ambar' : '');
+      luces.verde.className = 'luz' + (estado === 'verde' ? ' on-verde' : '');
+    }
+    function duracion() {
+      if (estado === 'rojo')  { return [1000, 800, 620][aciertos] || 620; }
+      if (estado === 'ambar') { return [520, 430, 350][aciertos] || 350; }
+      return [900, 760, 640][aciertos] || 640;
+    }
+    function correr() {
+      clearTimeout(timer);
+      if (listo) { return; }
+      pintar();
+      timer = setTimeout(function () {
+        paso = (paso + 1) % 3;
+        estado = ciclo[paso];
+        correr();
+      }, duracion());
+    }
+    function marcar() {
+      for (var i = 0; i < marcas.length; i++) { marcas[i].className = i < aciertos ? 'on' : ''; }
+    }
+    zona.addEventListener('click', function () {
+      if (listo) { return; }
+      if (estado === 'rojo') {
+        aciertos++;
+        marcar();
+        if (aciertos >= 3) {
+          listo = true;
+          clearTimeout(timer);
+          estado = 'rojo'; pintar();
+          resolver('#consola7', '<b>Tráfico detenido.</b> Bogotá entera esperando por ustedes. Otra vez.', E.armar, 'Ir a la puerta');
+        } else {
+          decir('#consola7', 'Van <b>' + aciertos + ' de 3</b>. Y ahora va más rápido.');
+        }
+      } else {
+        aciertos = 0;
+        marcar();
+        decir('#consola7', estado === 'ambar' ? 'Ámbar no cuenta. Ansiosos.' : 'En verde no para nadie. A cero.', true);
+      }
+    });
+    arrancarSemaforo = function () { if (!timer && !listo) { correr(); } };
+  })();
+
+  /* ==================================================================
+     LA PUERTA — arrastrar las 7 letras (o tocarlas)
+     ================================================================== */
+  (function () {
+    var huecos = $('#huecos'), banco = $('#banco');
+    var listo = false, arrastrando = null, dx = 0, dy = 0, movido = false, origen = null;
+
+    for (var h = 0; h < PALABRA_FINAL.length; h++) {
+      var hu = document.createElement('div');
+      hu.className = 'hueco';
+      huecos.appendChild(hu);
+    }
+    var casillas = Array.prototype.slice.call(huecos.children);
+
+    var revueltas = barajar(LETRAS.slice());
+    if (revueltas.join('') === PALABRA_FINAL) { revueltas.reverse(); }
+    revueltas.forEach(function (L) {
+      var f = document.createElement('div');
+      f.className = 'ficha';
+      f.textContent = L;
+      hacerArrastrable(f);
+      banco.appendChild(f);
+    });
+
+    function limpiarResaltes() { casillas.forEach(function (c) { c.classList.remove('sobre'); }); }
+    function huecoBajo(x, y) {
+      var el = document.elementFromPoint(x, y);
+      return el ? el.closest('.hueco') : null;
+    }
+    function reset(f) {
+      f.classList.remove('volando');
+      f.style.left = f.style.top = f.style.width = f.style.height = '';
+    }
+    function soltarEnBanco(f) { reset(f); banco.appendChild(f); }
+    function colocar(f, hueco) {
+      var ocupa = hueco.firstElementChild;
+      if (ocupa && ocupa !== f) { soltarEnBanco(ocupa); }
+      reset(f);
+      hueco.appendChild(f);
+      revisar();
+    }
+
+    function hacerArrastrable(f) {
+      f.addEventListener('pointerdown', function (e) {
+        if (listo) { return; }
+        e.preventDefault();
+        var r = f.getBoundingClientRect();
+        origen = f.parentElement;
+        dx = e.clientX - r.left;
+        dy = e.clientY - r.top;
+        movido = false;
+        arrastrando = f;
+        try { f.setPointerCapture(e.pointerId); } catch (err) {}
+        f.style.width = r.width + 'px';
+        f.style.height = r.height + 'px';
+        f.style.left = r.left + 'px';
+        f.style.top = r.top + 'px';
+        f.classList.add('volando');
+      });
+
+      f.addEventListener('pointermove', function (e) {
+        if (arrastrando !== f) { return; }
+        if (Math.abs(e.clientX - (parseFloat(f.style.left) + dx)) > 2 ||
+            Math.abs(e.clientY - (parseFloat(f.style.top) + dy)) > 2) { movido = true; }
+        f.style.left = (e.clientX - dx) + 'px';
+        f.style.top = (e.clientY - dy) + 'px';
+        limpiarResaltes();
+        var hu = huecoBajo(e.clientX, e.clientY);
+        if (hu) { hu.classList.add('sobre'); }
+      });
+
+      function terminar(e) {
+        if (arrastrando !== f) { return; }
+        arrastrando = null;
+        limpiarResaltes();
+        if (!movido) {                              // fue un toque, no un arrastre
+          reset(f);
+          if (origen && origen.classList.contains('hueco')) { soltarEnBanco(f); }
+          else {
+            var libre = casillas.filter(function (c) { return !c.firstElementChild; })[0];
+            if (libre) { colocar(f, libre); } else { soltarEnBanco(f); }
+          }
+          return;
+        }
+        var hu = huecoBajo(e.clientX, e.clientY);
+        if (hu) { colocar(f, hu); }
+        else if (origen && origen.classList.contains('hueco')) { colocar(f, origen); }
+        else { soltarEnBanco(f); }
+      }
+      f.addEventListener('pointerup', terminar);
+      f.addEventListener('pointercancel', function () {
+        if (arrastrando === f) { arrastrando = null; limpiarResaltes(); soltarEnBanco(f); }
+      });
+    }
+
+    function revisar() {
+      var palabra = casillas.map(function (c) {
+        return c.firstElementChild ? c.firstElementChild.textContent : '';
+      }).join('');
+      if (palabra.length < PALABRA_FINAL.length) { return; }
+
+      if (palabra === PALABRA_FINAL) {
+        listo = true;
+        huecos.classList.add('ok');
+        decir('#consola8', '<b>' + PALABRA_FINAL + '.</b> La puerta se abre.');
+        pedirSiguiente(escapar, 'Abrir la puerta');
+      } else {
+        huecos.classList.add('error');
+        setTimeout(function () { huecos.classList.remove('error'); }, 460);
+        decir('#consola8', '<b>' + palabra + '</b> no abre nada. Vuelvan a intentarlo.', true);
+        setTimeout(function () {
+          casillas.forEach(function (c) { if (c.firstElementChild) { soltarEnBanco(c.firstElementChild); } });
+        }, 700);
+      }
+    }
+
+    $('#btn-limpiar').addEventListener('click', function () {
+      if (listo) { return; }
+      casillas.forEach(function (c) { if (c.firstElementChild) { soltarEnBanco(c.firstElementChild); } });
+    });
+  })();
+
+  /* ==================================================================
+     CELEBRACIÓN: confeti y globos
+     ================================================================== */
+  var COLORES = ['#ff8fab','#ffc14d','#7ed9a0','#8fd3ff','#c9a0ff','#ff6f61','#ffe08a'];
+
+  function lanzarConfeti(cuantos, duracion) {
+    var caja = $('#confeti');
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < cuantos; i++) {
+      var p = document.createElement('i');
+      p.style.left = (Math.random() * 100).toFixed(2) + '%';
+      p.style.background = COLORES[Math.floor(Math.random() * COLORES.length)];
+      p.style.setProperty('--desvio', (Math.random() * 140 - 70).toFixed(0) + 'px');
+      p.style.setProperty('--giro', (Math.random() * 900 + 360).toFixed(0) + 'deg');
+      p.style.animationDuration = (Math.random() * 1.8 + 2.2).toFixed(2) + 's';
+      p.style.animationDelay = (Math.random() * (duracion || 1.2)).toFixed(2) + 's';
+      if (Math.random() > .6) { p.style.borderRadius = '50%'; p.style.height = '8px'; }
+      frag.appendChild(p);
+    }
+    caja.appendChild(frag);
+    // se limpian solas para no dejar basura en el DOM
+    setTimeout(function () { caja.innerHTML = ''; }, ((duracion || 1.2) + 4.5) * 1000);
+  }
+
+  function soltarGlobos() {
+    var caja = $('#globos');
+    if (caja.dataset.puesto) { return; }
+    caja.dataset.puesto = '1';
+    var frag = document.createDocumentFragment();
+    var total = window.matchMedia('(max-width:420px)').matches ? 9 : 14;
+    for (var i = 0; i < total; i++) {
+      var g = document.createElement('span');
+      g.className = 'globo';
+      g.style.left = (Math.random() * 92 + 2).toFixed(2) + '%';
+      g.style.background = COLORES[i % COLORES.length];
+      g.style.setProperty('--vaiven', (Math.random() * 70 - 35).toFixed(0) + 'px');
+      g.style.animationDuration = (Math.random() * 8 + 11).toFixed(1) + 's';
+      g.style.animationDelay = (-Math.random() * 12).toFixed(1) + 's';
+      frag.appendChild(g);
+    }
+    ['👶','🍼','🧸','🎈'].forEach(function (emo, k) {
+      var b = document.createElement('span');
+      b.className = 'bebe';
+      b.textContent = emo;
+      b.style.left = (12 + k * 22 + Math.random() * 8).toFixed(2) + '%';
+      b.style.setProperty('--vaiven', (Math.random() * 60 - 30).toFixed(0) + 'px');
+      b.style.animationDuration = (Math.random() * 7 + 14).toFixed(1) + 's';
+      b.style.animationDelay = (-Math.random() * 10).toFixed(1) + 's';
+      frag.appendChild(b);
+    });
+    caja.appendChild(frag);
+  }
+
+  /* ==================================================================
+     ¡ESCAPARON! — la puerta se abre y arranca la celebración
+     ================================================================== */
+  function escapar() {
+    pararReloj();
+    Sonido.celebrar();               // el suspenso baja y entra la invitación
+    $('#btn-salida').hidden = true;
+    $('#tiempo-final').textContent = tiempoFin;
+
+    // las 7 letras, ya ordenadas, para que vean que esa era la clave
+    var clave = $('#clave');
+    clave.innerHTML = '';
+    PALABRA_FINAL.split('').forEach(function (L, i) {
+      var s = document.createElement('i');
+      s.textContent = L;
+      s.style.animationDelay = (0.5 + i * 0.13) + 's';
+      clave.appendChild(s);
+    });
+
+    $('#calidez').style.opacity = '1';
+    setTimeout(function () {
+      body.classList.add('modo-luz');   // ojo: NO 'luz' — esa clase es la del semáforo
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#fff6ec');
+    }, 700);
+    setTimeout(function () {
+      mostrar(E.escape);
+      lanzarConfeti(90, 1.6);
+      soltarGlobos();
+    }, 1200);
+  }
+
+  /* ==================================================================
+     CUENTA REGRESIVA (usa la hora del propio equipo)
+     ================================================================== */
+  var cuentaTimer = null;
+  function arrancarCuenta() {
+    var c = EVENTO.cuando;
+    var meta = new Date(c.anio, c.mes - 1, c.dia, c.hora, c.minuto, 0);
+    function pintar() {
+      var falta = meta - new Date();
+      if (falta <= 0) {
+        $('#cd-d').textContent = $('#cd-h').textContent =
+        $('#cd-m').textContent = $('#cd-s').textContent = '00';
+        var caja = $('#cuenta');
+        if (!caja.dataset.listo) {
+          caja.dataset.listo = '1';
+          caja.innerHTML = '<div style="flex:1"><b>¡HOY!</b><span>es el día</span></div>';
+        }
+        return;
+      }
+      var s = Math.floor(falta / 1000);
+      var dd = Math.floor(s / 86400);
+      var hh = Math.floor((s % 86400) / 3600);
+      var mm = Math.floor((s % 3600) / 60);
+      var ss = s % 60;
+      $('#cd-d').textContent = ('0' + dd).slice(-2);
+      $('#cd-h').textContent = ('0' + hh).slice(-2);
+      $('#cd-m').textContent = ('0' + mm).slice(-2);
+      $('#cd-s').textContent = ('0' + ss).slice(-2);
+    }
+    pintar();
+    if (!cuentaTimer) { cuentaTimer = setInterval(pintar, 1000); }
+  }
+
+  /* ==================================================================
+     NAVEGACIÓN
+     ================================================================== */
+  $('#btn-entrar').addEventListener('click', function () {
+    Sonido.arrancar();          // por si el navegador no disparó el pointerdown
+    arrancarReloj();
+    $('#btn-salida').hidden = false;
+    mostrar(E.c1);
+  });
+  $('#btn-porque').addEventListener('click', function () {
+    mostrar(E.final);
+    lanzarConfeti(50, 1);
+  });
+  $('#btn-datos').addEventListener('click', function () {
+    mostrar(E.datos);
+    arrancarCuenta();
+  });
+  $('#btn-salida').addEventListener('click', function () {
+    while (ganadas < LETRAS.length) { ganarLetra(); }   // les regala las letras
+    mostrar(E.armar);                                   // pero la palabra la arman ellos
+  });
+
+  /* Arranca lo que sólo debe correr cuando su escena está en pantalla */
+  [[E.bruno, function () { arrancarFuga(); }], [E.c7, function () { arrancarSemaforo(); }]].forEach(function (par) {
+    var esc = par[0], fn = par[1];
+    new MutationObserver(function () {
+      if (esc.classList.contains('activa') && !esc.dataset.corriendo) {
+        esc.dataset.corriendo = '1';
+        fn();
+      }
+    }).observe(esc, { attributes:true, attributeFilter:['class'] });
+  });
+
+  /* ==================================================================
+     BLINDAJE ANTI-SCROLL + REAJUSTES
+     ================================================================== */
+  document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive:false });
+  document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
+  document.addEventListener('dblclick', function (e) { e.preventDefault(); });
+  window.addEventListener('scroll', function () { window.scrollTo(0, 0); }, { passive:true });
+
+  var temp;
+  function reajustar() { clearTimeout(temp); temp = setTimeout(ajustar, 120); }
+  window.addEventListener('resize', reajustar);
+  window.addEventListener('orientationchange', reajustar);
+  if (window.visualViewport) { window.visualViewport.addEventListener('resize', reajustar); }
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(ajustar); }
+  window.addEventListener('load', ajustar);
+  ajustar();
+})();
+</script>
+</body>
+</html>
