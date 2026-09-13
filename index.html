@@ -709,7 +709,7 @@ body.modo-luz .sonido{ background:rgba(255,255,255,.6) }
     <div class="dentro">
       <div class="sube etiqueta">Cerradura 02/07 <span class="nivel" data-nivel="2"></span></div>
       <h2 class="sube titulo">Código<br>de dos cifras</h2>
-      <p class="sube linea">Primero: <b>los años que llevan casados</b>. Después: <b>los años del que siempre llora</b>.</p>
+      <p class="sube linea">Primero: <b>los años que llevan casados</b>. Después: <b>los años del que asusta por grande y termina pidiendo mimos</b>.</p>
       <div class="sube visor" id="visor2"><i></i><i></i></div>
       <div class="sube teclado" id="teclado2"></div>
       <div class="sube consola" id="consola2">Dos dígitos. Sin espacios. Sin excusas.</div>
@@ -930,7 +930,7 @@ const EVENTO = {
   // Confirmación por WhatsApp (57 = Colombia). Abre la app con el mensaje listo.
   whatsapp: {
     numero:  "573176708598",
-    mensaje: "HOLA HIJA, RECIBIMOS LA INVITACIÓN. NUESTRA RESPUESTA ES: ...."
+    mensaje: "Hola hija, recibimos la invitación. Nuestra respuesta es: ..."
   }
 };
 
@@ -975,7 +975,7 @@ const PISTAS = {
       'El tinto y el merengón son de ella. Las bermudas y el saco sin estrenar, de él.'],
   2: ['Son dos números de un solo dígito cada uno.',
       'El primero: cuántos aniversarios de matrimonio llevan.',
-      'El segundo tiene cuatro patas, orejas paradas y mucho drama. Ya casi.'],
+      'El segundo tiene cuatro patas, orejas paradas, cara de lobo y alma de bebé. Ya casi.'],
   3: ['No volteen a lo loco: memoricen dónde quedó cada cosa.',
       'Sólo necesitan tres parejas, no las seis.',
       'Si las dos son iguales se quedan destapadas. Si no, se tapan otra vez.'],
@@ -1322,7 +1322,7 @@ const PISTAS = {
       if (buffer.length < 2 || listo) { return; }
       if (buffer === CLAVES.codigo) {
         listo = true;
-        resolver('#consola2', '<b>' + CLAVES.codigo + '.</b> Tres de casados y cinco de llanto.', E.c3);
+        resolver('#consola2', '<b>' + CLAVES.codigo + '.</b> Tres de casados y los cinco del guardián más tierno de la casa.', E.c3);
       } else {
         fallos++;
         visor.classList.add('error');
