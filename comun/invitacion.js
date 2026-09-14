@@ -21,6 +21,9 @@ const EVENTO = {
   // Link corto de Google Maps: en celular abre directo la app de mapas
   ubicacion: "https://maps.app.goo.gl/5PxhmZWkUpTtSuLq8",
 
+  // Quiénes invitan (aparece en la invitación y en la firma)
+  anfitriones: "la mamita, Adri y Will",
+
   // Número que recibe las confirmaciones (57 = Colombia)
   whatsapp: "573176708598",
 
@@ -61,7 +64,8 @@ const EVENTO = {
           '<div class="sube cintillo">🍼 Se viene algo grande 🎈</div>',
           '<p class="sube invita">Andrés y Cristina están esperando<br>la llegada de</p>',
           '<h2 class="sube nombre">Noah</h2>',
-          '<p class="sube linea">' + FAMILIA.noticia + '</p>',
+          '<p class="sube linea">Vamos a recibirlo con toda la familia reunida, y por eso <b>' + EVENTO.anfitriones + '</b> los invitan a celebrar.</p>',
+          '<p class="sube linea tenue">' + FAMILIA.noticia + '</p>',
         '</div>',
       '</section>',
 
@@ -104,7 +108,7 @@ const EVENTO = {
             '</a>',
           '</div>',
 
-          '<p class="sube firma">' + FAMILIA.firma + '</p>',
+          '<p class="sube firma">Los esperamos con todo el amor,<br><b>' + EVENTO.anfitriones + '</b></p>',
         '</div>',
       '</section>',
 
