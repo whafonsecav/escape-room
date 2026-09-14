@@ -31,7 +31,7 @@ const EVENTO = {
   ubicacion: "https://maps.app.goo.gl/5PxhmZWkUpTtSuLq8",
   whatsapp: {
     numero:  "573176708598",
-    mensaje: "HOLA HIJA, RECIBIMOS LA INVITACIÓN. NUESTRA RESPUESTA ES: ...."
+    mensaje: "Hola hija, recibimos la invitación. Nuestra respuesta es: ..."
   }
 };
 ```
@@ -112,6 +112,37 @@ Dos pistas, en `assets/`:
 - Para cambiar las pistas: reemplaza los archivos en `assets/` conservando el
   nombre, o edita `AUDIO` al inicio del `<script>` (el volumen y los segundos de
   cruce también se ajustan ahí). Los espacios del nombre van como `%20` en la URL.
+
+---
+
+## 👨‍👩‍👧 Las tres invitaciones
+
+Un mismo repositorio, tres páginas distintas:
+
+| Para quién | URL | Qué es |
+|---|---|---|
+| **Andrés y Cristina** | `/escape-room/` | El escape room de 7 cerraduras (la sorpresa) |
+| **Fernando, Cata y los niños** | `/escape-room/fernando-cata/` | Invitación directa a la celebración |
+| **Sebastián y Laura** | `/escape-room/sebastian-laura/` | Invitación directa a la celebración |
+
+Las dos invitaciones directas comparten diseño y motor:
+
+```
+comun/invitacion.css     estilos (paleta cálida, globos, confeti)
+comun/invitacion.js      motor + DATOS DEL EVENTO (fecha, lugar, WhatsApp)
+fernando-cata/index.html sólo define a quién va dirigida
+sebastian-laura/index.html
+```
+
+**Para invitar a otra familia:** copia una carpeta, cámbiale el nombre y edita las
+cuatro líneas de `FAMILIA` en su `index.html`. Nada más.
+
+**Si cambia la fecha o el lugar:** se edita una sola vez en `comun/invitacion.js`
+(y en `index.html` para el escape room).
+
+Cada invitación tiene tres pantallas: un sobre que se toca para abrir → la noticia
+con confeti y globos → los detalles con cuenta regresiva y los botones de confirmar
+y ubicación. Suena la música de celebración desde el primer toque.
 
 ---
 
