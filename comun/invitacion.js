@@ -22,7 +22,7 @@ const EVENTO = {
   ubicacion: "https://maps.app.goo.gl/5PxhmZWkUpTtSuLq8",
 
   // La nota del detalle para Noah (se muestra como una tarjeta más)
-  regalo: "Un detallito para su llegada",
+  regalo: "Tráiganle su primer regalo",
 
   // Número que recibe las confirmaciones (57 = Colombia)
   whatsapp: "573176708598",
