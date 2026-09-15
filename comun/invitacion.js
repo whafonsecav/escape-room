@@ -72,7 +72,7 @@ const EVENTO = {
           '<div class="sube cintillo">🍼 Se viene algo grande 🎈</div>',
           '<p class="sube invita">Ya viene en camino<br>el nuevo integrante de la familia</p>',
           '<div class="sube nombre-zona"><span class="halo"></span><h2 class="nombre">Noah</h2></div>',
-          '<p class="sube linea">Por eso hemos preparado algo muy especial para él y para <b>Andrés y Cristina</b>. Y queremos que ustedes también hagan parte de esta celebración.</p>',
+          '<p class="sube linea">Por eso hemos preparado algo muy especial para <b>Andrés y Cristina</b>. Y queremos que ustedes también hagan parte de esta celebración.</p>',
           '<p class="sube linea tenue">' + FAMILIA.noticia + '</p>',
         '</div>',
       '</section>',
