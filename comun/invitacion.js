@@ -66,7 +66,7 @@ const EVENTO = {
       '<section class="escena" id="e-noticia">',
         '<div class="dentro">',
           '<div class="sube cintillo">🍼 Se viene algo grande 🎈</div>',
-          '<p class="sube invita">Se viene en camino<br>el nuevo integrante de la familia</p>',
+          '<p class="sube invita">Ya viene en camino<br>el nuevo integrante de la familia</p>',
           '<h2 class="sube nombre">Noah</h2>',
           '<p class="sube linea">Para celebrar su pronta llegada le preparamos algo muy especial a <b>Andrés y Cristina</b>, y <b>' + EVENTO.anfitriones + '</b> quieren que sea con ustedes.</p>',
           '<p class="sube linea tenue">' + FAMILIA.noticia + '</p>',

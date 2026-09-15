@@ -122,7 +122,7 @@ Un mismo repositorio, tres páginas distintas:
 | Para quién | URL | Qué es |
 |---|---|---|
 | **Andrés y Cristina** | `/escape-room/` | El escape room de 7 cerraduras (la sorpresa) |
-| **Fernando, Cata y los niños** | `/escape-room/fernando-cata/` | Invitación directa a la celebración |
+| **Familia Beltrán Quiroga** | `/escape-room/familia-beltran-quiroga/` | Invitación directa a la celebración |
 | **Sebastián y Laura** | `/escape-room/sebastian-laura/` | Invitación directa a la celebración |
 
 Las dos invitaciones directas comparten diseño y motor:
@@ -130,7 +130,7 @@ Las dos invitaciones directas comparten diseño y motor:
 ```
 comun/invitacion.css     estilos (paleta cálida, globos, confeti)
 comun/invitacion.js      motor + DATOS DEL EVENTO (fecha, lugar, WhatsApp)
-fernando-cata/index.html sólo define a quién va dirigida
+familia-beltran-quiroga/index.html   sólo define a quién va dirigida
 sebastian-laura/index.html
 ```
 
