@@ -137,10 +137,8 @@ sebastian-laura/index.html
 **Para invitar a otra familia:** copia una carpeta, cámbiale el nombre y edita las
 cuatro líneas de `FAMILIA` en su `index.html`. Nada más.
 
-**Si cambia la fecha, el lugar o quién invita:** se edita una sola vez en
-`comun/invitacion.js` (y en `index.html` para el escape room). Los anfitriones
-(`anfitriones: "la mamita, Adri y Will"`) aparecen tanto en la invitación como en
-la firma, así que se cambian en un solo sitio.
+**Si cambia la fecha, el lugar, el plan o la nota del detalle para Noah:** se edita
+una sola vez en `comun/invitacion.js` (y en `index.html` para el escape room).
 
 Cada invitación tiene tres pantallas: un sobre que se toca para abrir → la noticia
 con confeti y globos → los detalles con cuenta regresiva y los botones de confirmar

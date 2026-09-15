@@ -21,8 +21,8 @@ const EVENTO = {
   // Link corto de Google Maps: en celular abre directo la app de mapas
   ubicacion: "https://maps.app.goo.gl/5PxhmZWkUpTtSuLq8",
 
-  // Quiénes invitan (aparece en la invitación y en la firma)
-  anfitriones: "La mamita, Adri y Will",
+  // La nota del detalle para Noah (se muestra como una tarjeta más)
+  regalo: "Un detallito para su llegada",
 
   // Número que recibe las confirmaciones (57 = Colombia)
   whatsapp: "573176708598",
@@ -101,6 +101,11 @@ const EVENTO = {
             '<span><span class="k">El plan</span><span class="v">' + EVENTO.plan + '</span></span>',
           '</div>',
 
+          '<div class="sube dato">',
+            '<span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="12" rx="1.5"/><path d="M3 13h18M12 9v12"/><path d="M12 9S10.5 3 8 3a2.5 2.5 0 0 0 0 5h4zM12 9s1.5-6 4-6a2.5 2.5 0 0 1 0 5h-4z"/></svg></span>',
+            '<span><span class="k">Para Noah</span><span class="v">' + EVENTO.regalo + '</span></span>',
+          '</div>',
+
           '<div class="sube acciones">',
             '<a class="btn" id="btn-rsvp" href="#" target="_blank" rel="noopener">',
               '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 21l2.2-5.5A8.4 8.4 0 1 1 21 11.5z"/></svg>',
@@ -112,10 +117,7 @@ const EVENTO = {
             '</a>',
           '</div>',
 
-          '<p class="sube firma">',
-            '<span class="despedida">¡Los esperamos!</span>',
-            'Con todo el amor,<br><b>' + EVENTO.anfitriones + '</b>',
-          '</p>',
+          '<p class="sube firma">Los esperamos con todo el amor.</p>',
         '</div>',
       '</section>',
 
