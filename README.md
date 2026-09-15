@@ -135,7 +135,11 @@ sebastian-laura/index.html
 ```
 
 **Para invitar a otra familia:** copia una carpeta, cámbiale el nombre y edita las
-cuatro líneas de `FAMILIA` en su `index.html`. Nada más.
+líneas de `FAMILIA` en su `index.html`. Nada más.
+
+Una familia puede tener **su propia hora**: basta añadir `hora` y `cuando` a su
+`FAMILIA` y manda la suya, también en la cuenta regresiva. Así, los Beltrán Quiroga
+están citados a las 12:00 y el resto a las 12:30.
 
 **Si cambia la fecha, el lugar, el plan o la nota del detalle para Noah:** se edita
 una sola vez en `comun/invitacion.js` (y en `index.html` para el escape room).

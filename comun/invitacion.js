@@ -36,6 +36,10 @@ const EVENTO = {
   'use strict';
 
   var $ = function (s) { return document.querySelector(s); };
+
+  // Cada familia puede tener su propia hora: si la define, manda la suya
+  var HORA   = FAMILIA.hora || EVENTO.hora;
+  var CUANDO = Object.assign({}, EVENTO.cuando, FAMILIA.cuando || {});
   var COLORES = ['#ff8fab','#ffc14d','#7ed9a0','#8fd3ff','#c9a0ff','#ff6f61','#ffe08a'];
 
   /* ==================================================================
@@ -67,8 +71,8 @@ const EVENTO = {
         '<div class="dentro">',
           '<div class="sube cintillo">🍼 Se viene algo grande 🎈</div>',
           '<p class="sube invita">Ya viene en camino<br>el nuevo integrante de la familia</p>',
-          '<h2 class="sube nombre">Noah</h2>',
-          '<p class="sube linea">Hemos querido preparar algo muy especial para <b>Andrés y Cristina</b>, y celebrarlo rodeados de la familia.</p>',
+          '<div class="sube nombre-zona"><span class="halo"></span><h2 class="nombre">Noah</h2></div>',
+          '<p class="sube linea">Por eso quisimos preparar algo muy especial para él, y para <b>Andrés y Cristina</b>. ¿Y qué mejor que celebrarlo con toda la familia reunida?</p>',
           '<p class="sube linea tenue">' + FAMILIA.noticia + '</p>',
         '</div>',
       '</section>',
@@ -81,7 +85,7 @@ const EVENTO = {
           '<div class="sube fecha-bloque">',
             '<span class="fecha-mes">' + EVENTO.diaSemana + '</span>',
             '<span class="fecha-dia">' + EVENTO.fecha + '</span>',
-            '<span class="fecha-hora">' + EVENTO.hora + '</span>',
+            '<span class="fecha-hora">' + HORA + '</span>',
           '</div>',
 
           '<div class="sube cuenta" aria-label="Cuenta regresiva">',
@@ -263,7 +267,7 @@ const EVENTO = {
      ================================================================== */
   var cuentaTimer = null;
   function arrancarCuenta() {
-    var c = EVENTO.cuando;
+    var c = CUANDO;
     var meta = new Date(c.anio, c.mes - 1, c.dia, c.hora, c.minuto, 0);
     function pintar() {
       var falta = meta - new Date();

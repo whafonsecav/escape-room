@@ -124,12 +124,29 @@ body{
   font-size:clamp(24px,min(8.6vw,4.8vh),44px); line-height:1.04;
   letter-spacing:-.02em; color:var(--ink); text-wrap:balance;
 }
+.nombre-zona{ position:relative; display:grid; place-items:center; padding:clamp(2px,1vh,8px) 0 }
+.halo{
+  position:absolute; width:min(82vw,360px); aspect-ratio:1; border-radius:50%;
+  background:radial-gradient(circle, rgba(255,178,110,.55) 0%, rgba(255,178,110,0) 68%);
+  pointer-events:none; animation:respirar 3.6s ease-in-out infinite;
+}
+@keyframes respirar{
+  0%,100%{ transform:scale(.82); opacity:.55 }
+  50%    { transform:scale(1.08); opacity:1 }
+}
+/* el nombre entra con un pequeño salto, después del resto del texto */
 .nombre{
+  position:relative; z-index:2;
+  animation:brotar .8s cubic-bezier(.2,1.5,.35,1) .3s both;
   font-family:var(--serif); font-weight:900; font-size:var(--fs-huge);
   line-height:.9; letter-spacing:-.035em;
   background:linear-gradient(145deg,#e0812f 0%,#c05c1e 45%,#a8432a 100%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
   filter:drop-shadow(0 6px 20px rgba(192,92,30,.25));
+}
+@keyframes brotar{
+  from{ opacity:0; transform:scale(.7) translateY(8px) }
+  to  { opacity:1; transform:none }
 }
 .invita{
   font-family:var(--serif); font-weight:700;
