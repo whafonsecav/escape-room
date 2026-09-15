@@ -164,7 +164,30 @@ p.linea b{ color:var(--terracota); font-weight:700 }
 .acciones{ display:flex; flex-direction:column; gap:8px; width:100%; align-items:center }
 .acciones .btn{ width:100%; max-width:320px }
 
-/* Sobre que se toca para abrir */
+/* Sobre que se toca para abrir: anillos que laten + aviso explícito */
+.sobre-zona{ position:relative; display:grid; place-items:center; padding:clamp(14px,4vw,22px) }
+.pulso{
+  position:absolute; width:clamp(104px,32vw,160px); aspect-ratio:1;
+  border-radius:50%; border:2px solid var(--terracota);
+  opacity:0; pointer-events:none;
+  animation:pulso 2.2s cubic-bezier(.2,.6,.3,1) infinite;
+}
+.pulso.b{ animation-delay:1.1s }
+@keyframes pulso{
+  0%   { transform:scale(.72); opacity:.5 }
+  70%  { opacity:.12 }
+  100% { transform:scale(1.5); opacity:0 }
+}
+.toque{
+  display:inline-flex; align-items:center; gap:9px; justify-content:center;
+  font-size:var(--fs-micro); letter-spacing:.22em; text-transform:uppercase;
+  color:var(--terracota); font-weight:700;
+  animation:invitar 1.9s ease-in-out infinite;
+}
+.toque .dedo{ font-size:1.25em; animation:tocar 1.9s ease-in-out infinite }
+@keyframes invitar{ 0%,100%{opacity:.5} 50%{opacity:1} }
+@keyframes tocar{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
 .sobre{
   width:clamp(96px,30vw,150px); aspect-ratio:1.38;
   border-radius:8px; position:relative; cursor:pointer;
@@ -172,6 +195,7 @@ p.linea b{ color:var(--terracota); font-weight:700 }
   box-shadow:0 12px 30px rgba(192,92,30,.18), inset 0 0 0 1.5px var(--borde);
   display:grid; place-items:center;
   animation:latido 2.6s ease-in-out infinite;
+  z-index:2;
   touch-action:manipulation;
 }
 .sobre::before{
