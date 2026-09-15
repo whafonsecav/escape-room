@@ -139,6 +139,12 @@ body{
 p.linea{ font-size:var(--fs-body); line-height:1.5; max-width:31ch; margin:0 auto; color:var(--ink); text-wrap:pretty }
 p.linea.tenue{ color:var(--dim) }
 p.linea b{ color:var(--terracota); font-weight:700 }
+.firma .despedida{
+  display:block; margin-bottom:6px;
+  font-family:var(--mono); font-style:normal; font-weight:700;
+  font-size:var(--fs-micro); letter-spacing:.2em; text-transform:uppercase;
+  color:var(--terracota);
+}
 .firma{
   font-family:var(--serif); font-style:italic; font-weight:700;
   font-size:clamp(13px,min(4.1vw,2.2vh),19px); color:#8a5a33; line-height:1.35;

@@ -22,7 +22,7 @@ const EVENTO = {
   ubicacion: "https://maps.app.goo.gl/5PxhmZWkUpTtSuLq8",
 
   // Quiénes invitan (aparece en la invitación y en la firma)
-  anfitriones: "la mamita, Adri y Will",
+  anfitriones: "La mamita, Adri y Will",
 
   // Número que recibe las confirmaciones (57 = Colombia)
   whatsapp: "573176708598",
@@ -112,7 +112,10 @@ const EVENTO = {
             '</a>',
           '</div>',
 
-          '<p class="sube firma">Los esperamos con todo el amor,<br><b>' + EVENTO.anfitriones + '</b></p>',
+          '<p class="sube firma">',
+            '<span class="despedida">¡Los esperamos!</span>',
+            'Con todo el amor,<br><b>' + EVENTO.anfitriones + '</b>',
+          '</p>',
         '</div>',
       '</section>',
 
