@@ -36,6 +36,8 @@ const EVENTO = {
   'use strict';
 
   var $ = function (s) { return document.querySelector(s); };
+  // Los anfitriones abren una frase, así que ahí van con mayúscula inicial
+  var Anfitriones = EVENTO.anfitriones.charAt(0).toUpperCase() + EVENTO.anfitriones.slice(1);
   var COLORES = ['#ff8fab','#ffc14d','#7ed9a0','#8fd3ff','#c9a0ff','#ff6f61','#ffe08a'];
 
   /* ==================================================================
@@ -68,7 +70,7 @@ const EVENTO = {
           '<div class="sube cintillo">🍼 Se viene algo grande 🎈</div>',
           '<p class="sube invita">Ya viene en camino<br>el nuevo integrante de la familia</p>',
           '<h2 class="sube nombre">Noah</h2>',
-          '<p class="sube linea">Para celebrar su pronta llegada le preparamos algo muy especial a <b>Andrés y Cristina</b>, y <b>' + EVENTO.anfitriones + '</b> quieren que sea con ustedes.</p>',
+          '<p class="sube linea"><b>' + Anfitriones + '</b> prepararon algo muy especial para <b>Andrés y Cristina</b>, y queremos celebrarlo en familia.</p>',
           '<p class="sube linea tenue">' + FAMILIA.noticia + '</p>',
         '</div>',
       '</section>',
